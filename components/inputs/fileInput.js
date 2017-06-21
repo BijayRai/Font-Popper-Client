@@ -1,37 +1,57 @@
+// @flow
 import Dropzone from 'react-dropzone'
 import React from 'react'
+import type { InputField, InputMeta } from '../../flowTypes/reduxRenderFormField'
+import type { File } from '../../flowTypes/File'
 
-class renderDropzoneInput extends React.Component {
-  constructor (props) {
+type State = {
+  preview: null | string
+}
+type Props = {
+  input: InputField,
+  meta: InputMeta,
+  preview: null | string
+}
+
+class renderDropzoneInput extends React.Component <void, Props, State> {
+  handleDropRejected: Function
+  handleFileAccepted: Function
+  removeItem: Function
+  state: State
+
+  constructor (props: Props) {
     super(props)
 
-    this.state = { preview: null }
+    this.state = {preview: null}
     this.handleDropRejected = this.handleDropRejected.bind(this)
     this.handleFileAccepted = this.handleFileAccepted.bind(this)
     this.removeItem = this.removeItem.bind(this)
   }
 
   componentWillMount () {
-    this.setState({ preview: this.props.preview })
+    this.setState({preview: this.props.preview})
   }
 
-  handleDropRejected (...args) {
+  handleDropRejected () {
+    // handle rejected has ...args if needed
     this.props.input.onChange({})
   }
-  handleFileAccepted (accepted) {
-    const [{ preview }] = accepted
-    this.setState({ preview: preview })
+
+  handleFileAccepted (accepted: File[]) {
+    const [{preview}] = accepted
+    this.setState({preview: preview})
 
     this.props.input.onChange(accepted)
   }
+
   removeItem () {
-    this.setState({ preview: null })
+    this.setState({preview: null})
     this.props.input.onChange([])
   }
 
   render () {
-    const { preview } = this.state
-    const { input, meta } = this.props
+    const {preview} = this.state
+    const {input, meta} = this.props
     const files = input.value
 
     return (
@@ -47,18 +67,18 @@ class renderDropzoneInput extends React.Component {
           </div>
         </Dropzone>
         {meta.invalid &&
-          meta.error &&
-          <span className='error'>{meta.error}</span>}
+        meta.error &&
+        <span className='error'>{meta.error}</span>}
         {preview && <img src={preview} alt='image preview' />}
         {files &&
-          Array.isArray(files) &&
-          <ul>
-            {files.map((file, i) => (
-              <li key={i}>
-                {file.name}<span onClick={this.removeItem}>REMOVE FILE</span>
-              </li>
-            ))}
-          </ul>}
+        Array.isArray(files) &&
+        <ul>
+          {files.map((file, i) => (
+            <li key={i}>
+              {file.name}<span onClick={this.removeItem}>REMOVE FILE</span>
+            </li>
+          ))}
+        </ul>}
       </div>
     )
   }

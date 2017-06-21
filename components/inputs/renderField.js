@@ -1,30 +1,35 @@
+// @flow
 import React from 'react'
+import type { RenderField } from '../../flowTypes/reduxRenderFormField'
 
-export const renderField = ({
-  input,
-  label,
-  type,
-  meta: { pristine, touched, error, invalid }
-}) => {
+type Props = RenderField
+export const renderField = (props: Props) => {
+  const {
+    input,
+    label,
+    type,
+    meta: {pristine, touched, error, invalid}
+  } = props
+
   // Track state of inputs:
   // console.log(`${label} is pristine: ${pristine}, invalid: ${invalid}, touched: ${touched}`);
 
   // Construct form-group class depending on form state`
-  const groupClass = !pristine || touched
+  const groupClass: string = !pristine || touched
     ? invalid
-        ? 'form-group has-error has-feedback'
-        : 'form-group has-success has-feedback'
+      ? 'form-group has-error has-feedback'
+      : 'form-group has-success has-feedback'
     : 'form-group'
 
   // Construct form-control class depending on form state
-  const inputClass = !pristine || touched
+  const inputClass: string = !pristine || touched
     ? invalid
-        ? 'form-control form-control-danger'
-        : 'form-control form-control-success'
+      ? 'form-control form-control-danger'
+      : 'form-control form-control-success'
     : 'form-control'
 
   // Render X or checkmark icon
-  const renderIcon = () => {
+  const renderIcon = (): React.Element<*> | void => {
     if ((!pristine && invalid) || (touched && invalid)) {
       return (
         <span
@@ -58,7 +63,7 @@ export const renderField = ({
       />
       {renderIcon()}
       {(!pristine && touched && invalid && <span>{error}</span>) ||
-        (!pristine && !touched && invalid && <span>{error}</span>)}
+      (!pristine && !touched && invalid && <span>{error}</span>)}
 
     </div>
   )

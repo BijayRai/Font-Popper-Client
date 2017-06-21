@@ -4,15 +4,16 @@ import Link from 'next/link'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    // stores: state.stores.data,
     pages: state.stores.pages,
-    pagination: state.pagination.pages.stores,
     currentPage: state.pagination.currentPage
   }
 }
-
-export default connect(mapStateToProps)(props => {
-  const { pages, currentPage } = props
+type Props = {
+  pages: number,
+  currentPage: number
+}
+export default connect(mapStateToProps)((props: Props) => {
+  const {pages, currentPage} = props
 
   const nextButton = () => {
     if (currentPage < pages) {

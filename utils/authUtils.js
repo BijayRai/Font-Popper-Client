@@ -120,7 +120,7 @@ export const findTokenToDecode = (ctxHeaders: any, ctxReq: any) => {
  * @param {Array} cookies - from Server-side
  * @returns {String} Cookie Token
  */
-export const convertResCookiesToString = (cookies:any):string => {
+export const convertResCookiesToString = (cookies: any): string => {
   const cookiesArray: string[] = []
 
   const jwtString: voidString = stringSplit(findKey(cookies[0], 'jwt'), '=')
@@ -250,13 +250,13 @@ export const validateUserTokenClient = async (store: ReduxStore, user: User): Ac
  */
 export const validateUserTokenServer = async (store: ReduxStore, user: User, cookies?: string): Action => {
   /*
-  * find cookies on browser(jwt)
-  * find user from token and pass user in to this function from getInitialProps on HOC
-  * - if there is no user(undefined) - dispatch logout
-  * - if there is a new user
-  * - return new user to save to redux
-  * - return old user to save to redux
-  */
+   * find cookies on browser(jwt)
+   * find user from token and pass user in to this function from getInitialProps on HOC
+   * - if there is no user(undefined) - dispatch logout
+   * - if there is a new user
+   * - return new user to save to redux
+   * - return old user to save to redux
+   */
   console.log('validateUser-Server', user)
 
   if (!user) {
@@ -264,8 +264,8 @@ export const validateUserTokenServer = async (store: ReduxStore, user: User, coo
   }
 
   /*
-  Save user from token
-  */
+   Save user from token
+   */
   console.log('save user')
 
   // example of getting more USER meta data

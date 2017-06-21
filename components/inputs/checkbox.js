@@ -1,16 +1,17 @@
 import React from 'react'
-
-export const checkBox = ({
-  key,
-  className,
-  value,
-  name,
-  id,
-  input,
-  label,
-  type,
-  meta: { pristine, touched, error, invalid }
-}) => {
+import type { RenderField } from '../../flowTypes/reduxRenderFormField'
+type Props = RenderField
+export const checkBox = (props: Props) => {
+  const {
+    key,
+    value,
+    name,
+    id,
+    input,
+    label,
+    type,
+    meta: {pristine, touched, error, invalid}
+  } = props
   // Track state of inputs:
   // console.log(`${label} is pristine: ${pristine}, invalid: ${invalid}, touched: ${touched}`);
 
@@ -24,8 +25,8 @@ export const checkBox = ({
   // Construct form-control class depending on form state
   const inputClass = !pristine || touched
     ? invalid
-        ? 'tag__choice form-control-danger'
-        : 'tag__choice form-control-success'
+      ? 'tag__choice form-control-danger'
+      : 'tag__choice form-control-success'
     : 'tag__choice'
 
   return (

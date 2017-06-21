@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux'
 import renderField from '../inputs/renderField'
 import { authenticateUser, saveUserToRedux } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
-import { getUserFromJWT } from '../../utils/authUtils'
 import Router from 'next/router'
 
 export class RegisterComponent extends Component {
@@ -35,7 +34,7 @@ export class RegisterComponent extends Component {
   }
 
   render () {
-    const { handleSubmit, valid, errorMessage } = this.props
+    const {handleSubmit, valid, errorMessage} = this.props
     const loginErrorText = () => {
       if (errorMessage) {
         return (
@@ -51,7 +50,7 @@ export class RegisterComponent extends Component {
     return (
       <form className='form' onSubmit={handleSubmit(this.handleFormSubmit)}>
         <h2>Sign Up</h2>
-        <Field name='name' type='text' component={renderField} label='Name:' />
+        <Field name='name' type='text' component={renderField} label='Name:'/>
         <Field
           name='email'
           type='email'
@@ -82,12 +81,6 @@ export class RegisterComponent extends Component {
     )
   }
 }
-
-// RegisterComponent.propTypes = {
-//   handleSubmit: PropTypes.func.isRequired,
-//   actions: PropTypes.object,
-//   errorMessage: PropTypes.string
-// }
 
 function validate (formProps) {
   let errors = {}

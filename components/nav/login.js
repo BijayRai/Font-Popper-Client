@@ -8,10 +8,15 @@ import { logUserOut } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import Router from 'next/router'
 import { unsetToken } from '../../utils/authUtils'
+import type { User } from '../../flowTypes/User'
 
-class isSignedIn extends React.Component {
-  constructor (props, context) {
-    super(props, context)
+type Props = {
+  logOut: Function,
+  user: User
+}
+class isSignedIn extends React.Component< void, Props, void > {
+  constructor (props) {
+    super(props)
     this.handleLogOut = this.handleLogOut.bind(this)
   }
   async handleLogOut () {
@@ -67,7 +72,7 @@ class isSignedIn extends React.Component {
     }
   }
 }
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     user: state.user
   }

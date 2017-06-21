@@ -4,13 +4,15 @@ import Login from './nav/login'
 import { nav } from '../components/nav/links'
 import { renderSvg } from '../utils/genericHelpers'
 import type { User } from '../flowTypes/User'
+import type { Nav } from '../flowTypes/Nav'
 
 // File links array based on if user is authenticated
 //     .filter(l => !l.authRequired || (l.authRequired && isAuthenticated))
 //     .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
 
 // File links array based on if user is authenticated
-const getLinks = (isAuthenticated: boolean) => {
+
+const getLinks = (isAuthenticated: boolean, nav: Nav) => {
   return nav.LINKS
     .filter(
       link => !link.authRequired || (link.authRequired && isAuthenticated)
@@ -44,7 +46,7 @@ export default connect(state => state)(({url, user}: Props) => {
               </a>
             </Link>
           </li>
-          {getLinks(user.isAuthenticated)}
+          {getLinks(user.isAuthenticated, nav)}
         </div>
 
         <Login />

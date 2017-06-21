@@ -1,3 +1,4 @@
+// @flow
 // SVGs
 import Logo from '../static/images/icons/logo.svg'
 import Store from '../static/images/icons/store.svg'
@@ -10,7 +11,9 @@ import Logout from '../static/images/icons/logout.svg'
 import Heart from '../static/images/icons/heart.svg'
 import Review from '../static/images/icons/review.svg'
 
-exports.svgs = {
+type Svg = { [string]: Function }
+
+const svgLinks: Svg = {
   Logo,
   Review,
   Store,
@@ -22,3 +25,4 @@ exports.svgs = {
   Heart,
   Logout
 }
+exports.svgs = svgLinks
