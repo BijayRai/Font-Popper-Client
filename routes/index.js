@@ -5,9 +5,10 @@ const querystring = require('querystring')
 
 exports.routes = (expressServer, app, handle) => {
   // I think TOP level pages dont need a link
-  // expressServer.get('/moment', tokenCtrl.tokenRefreshCheck, (req, res) => {
-  //   return app.render(req, res, '/moment', req.query)
-  // })
+  // Unless it needs to have a token refresh check on it
+  expressServer.get('/moment', tokenCtrl.tokenRefreshCheck, (req, res) => {
+    return app.render(req, res, '/moment', req.query)
+  })
   //
   // expressServer.get('/hidden', tokenCtrl.tokenRefreshCheck, (req, res) => {
   //   return app.render(req, res, '/hidden', req.query)

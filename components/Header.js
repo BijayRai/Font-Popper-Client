@@ -3,13 +3,14 @@ import { connect } from 'react-redux'
 import Login from './nav/login'
 import { nav } from '../components/nav/links'
 import { renderSvg } from '../utils/genericHelpers'
+import type { User } from '../flowTypes/User'
 
 // File links array based on if user is authenticated
 //     .filter(l => !l.authRequired || (l.authRequired && isAuthenticated))
 //     .filter(l => !isAuthenticated || (isAuthenticated && !l.anonymousOnly))
 
 // File links array based on if user is authenticated
-const getLinks = isAuthenticated => {
+const getLinks = (isAuthenticated: boolean) => {
   return nav.LINKS
     .filter(
       link => !link.authRequired || (link.authRequired && isAuthenticated)
@@ -27,8 +28,11 @@ const getLinks = isAuthenticated => {
       )
     })
 }
-
-export default connect(state => state)(({ url, user }) => {
+type Props = {
+  url : string,
+  user: User
+}
+export default connect(state => state)(({url, user}: Props) => {
   return (
     <header className='top'>
       <nav className='nav'>

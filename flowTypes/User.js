@@ -1,9 +1,14 @@
 // @flow
 
 export type User = {
-  _id: String,
-  name: String,
-  email: String,
-  gravatar: String,
-  hearts: String[]
+  isAuthenticated: boolean,
+  sub: string,
+  name: string,
+  email: string,
+  exp: string,
+  gravatar: ?string,
+  hearts: ?string[],
+  csrf: ?string,
+  rfs: ?string,
+  iat: ?string
 }

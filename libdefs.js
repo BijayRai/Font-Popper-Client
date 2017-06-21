@@ -22,3 +22,6 @@ declare module 'next/link' {
 declare module 'styled-components' {
   declare var exports: any
 }
+declare module 'jwt-decode' {
+  declare var exports: any
+}
