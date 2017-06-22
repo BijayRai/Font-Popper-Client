@@ -1,3 +1,4 @@
+// @flow
 import { connect } from 'react-redux'
 import React from 'react'
 import { bindActionCreators } from 'redux'
@@ -14,11 +15,14 @@ type Props = {
   logOut: Function,
   user: User
 }
-class isSignedIn extends React.Component< void, Props, void > {
+class isSignedIn extends React.Component<void, Props, void> {
+  handleLogOut: Function
+
   constructor (props) {
     super(props)
     this.handleLogOut = this.handleLogOut.bind(this)
   }
+
   async handleLogOut () {
     try {
       await this.props.logOut()
@@ -27,8 +31,9 @@ class isSignedIn extends React.Component< void, Props, void > {
       toastr.success('Logout', 'Successfully Logged Out')
     } catch (e) {}
   }
+
   render () {
-    const { user } = this.props
+    const {user} = this.props
     if (user.isAuthenticated) {
       return (
         <div className='nav__section nav__section--user'>

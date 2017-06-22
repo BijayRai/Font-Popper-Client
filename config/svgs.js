@@ -1,4 +1,3 @@
-// @flow
 // SVGs
 import Logo from '../static/images/icons/logo.svg'
 import Store from '../static/images/icons/store.svg'
@@ -9,13 +8,9 @@ import MapSvg from '../static/images/icons/map.svg'
 import Pencil from '../static/images/icons/pencil.svg'
 import Logout from '../static/images/icons/logout.svg'
 import Heart from '../static/images/icons/heart.svg'
-import Review from '../static/images/icons/review.svg'
 
-type Svg = { [string]: Function }
-
-const svgLinks: Svg = {
+exports.svgs = {
   Logo,
-  Review,
   Store,
   Tag,
   Top,
@@ -25,4 +20,3 @@ const svgLinks: Svg = {
   Heart,
   Logout
 }
-exports.svgs = svgLinks

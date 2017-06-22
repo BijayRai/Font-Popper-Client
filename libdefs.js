@@ -19,6 +19,9 @@ declare module 'next-redux-wrapper' {
 declare module 'next/link' {
   declare var exports: any
 }
+declare module 'next/router' {
+  declare var exports: any
+}
 declare module 'styled-components' {
   declare var exports: any
 }

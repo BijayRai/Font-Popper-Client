@@ -5,7 +5,6 @@ import {
 } from '../utils/errorHandlers'
 import actionTypes from '../actions/actionTypes'
 
-// Testing
 export default function ({ dispatch }) {
   return next => async action => {
     // console.log('Middleware')

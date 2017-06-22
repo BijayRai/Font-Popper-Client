@@ -1,3 +1,5 @@
+// @flow
+
 export type ReduxFormField = {
   value: string,
   active: boolean,

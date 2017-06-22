@@ -1,3 +1,5 @@
+// @flow
+
 export type ReduxStore = {
   dispatch: Function,
   getState: Function,

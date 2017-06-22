@@ -1,3 +1,4 @@
+// @flow
 import Link from 'next/link'
 import { connect } from 'react-redux'
 import Login from './nav/login'
@@ -31,7 +32,7 @@ const getLinks = (isAuthenticated: boolean, nav: Nav) => {
     })
 }
 type Props = {
-  url : string,
+  url: string,
   user: User
 }
 export default connect(state => state)(({url, user}: Props) => {

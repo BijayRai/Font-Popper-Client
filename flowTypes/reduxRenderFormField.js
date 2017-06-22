@@ -1,3 +1,5 @@
+// @flow
+
 export type InputField = {
   name: string,
   onBlur: Function,

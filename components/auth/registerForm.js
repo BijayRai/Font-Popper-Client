@@ -1,19 +1,39 @@
+// @flow
 import React, { Component } from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { Field as ReduxField, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import renderField from '../inputs/renderField'
 import { authenticateUser, saveUserToRedux } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import Router from 'next/router'
+import type { ReduxForm } from '../../flowTypes/reduxForm'
 
-export class RegisterComponent extends Component {
-  constructor (props, context) {
-    super(props, context)
+type Actions = {
+  authenticateUser: Function,
+  saveUserToRedux: Function,
+}
+
+type RegisterProps = {
+  email: string,
+  name: string,
+  password: string,
+  passwordConfirm: string
+}
+
+type Props = Actions & ReduxForm
+
+class RegisterComponent extends Component {
+  handleFormSubmit: Function
+  props: Props
+
+  constructor (props: Props) {
+    super(props)
+
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
   }
 
-  async handleFormSubmit (formProps) {
+  async handleFormSubmit (formProps: RegisterProps) {
     // call action creator to sign up the user on the server
     try {
       await this.props.authenticateUser(formProps)
@@ -50,21 +70,21 @@ export class RegisterComponent extends Component {
     return (
       <form className='form' onSubmit={handleSubmit(this.handleFormSubmit)}>
         <h2>Sign Up</h2>
-        <Field name='name' type='text' component={renderField} label='Name:'/>
-        <Field
+        <ReduxField name='name' type='text' component={renderField} label='Name:' />
+        <ReduxField
           name='email'
           type='email'
           component={renderField}
           label='Email:'
         />
-        <Field
+        <ReduxField
           name='password'
           type='password'
           component={renderField}
           label='Password:'
         />
-        {/*{password.error}*/}
-        <Field
+        {/* {password.error} */}
+        <ReduxField
           name='passwordConfirm'
           type='password'
           component={renderField}
@@ -82,7 +102,11 @@ export class RegisterComponent extends Component {
   }
 }
 
-function validate (formProps) {
+type validateErrors = {
+  email?: string,
+  passwordConfirm?: string
+}
+function validate (formProps: RegisterProps): validateErrors {
   let errors = {}
 
   const requiredFields = ['email', 'password', 'passwordConfirm']

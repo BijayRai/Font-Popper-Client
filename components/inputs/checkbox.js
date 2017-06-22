@@ -1,5 +1,6 @@
 import React from 'react'
 import type { RenderField } from '../../flowTypes/reduxRenderFormField'
+
 type Props = RenderField
 export const checkBox = (props: Props) => {
   const {

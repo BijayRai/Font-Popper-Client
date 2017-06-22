@@ -1,3 +1,5 @@
+// @flow
+
 export type ReduxForm = {
   anyTouched: boolean,
   array: any,
@@ -11,6 +13,7 @@ export type ReduxForm = {
   clearSubmitErrors: Function,
   destroy: Function,
   error: any,
+  errorMessage: string,
   form: string,
   handleSubmit: Function,
   initialValues: any,
