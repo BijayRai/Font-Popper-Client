@@ -1,25 +1,39 @@
+// @flow
+
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Field, reduxForm, reset } from 'redux-form'
+import { Field as ReduxField, reduxForm } from 'redux-form'
 import {
-  signinUser,
   saveUserToRedux,
   forgotUser
 } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
-import Router from 'next/router'
-import { getUserFromJWT } from '../../utils/authUtils'
+import type { ReduxForm } from '../../flowTypes/reduxForm'
+
+type Actions = {
+  forgotUser: Function,
+  saveUser: Function,
+}
+
+type formProps = {
+  email: string,
+}
+
+type Props = Actions & ReduxForm
 
 class ForgotPasswordComponent extends React.Component {
+  props: Props
+  handleFormSubmit: Function
+
   constructor (props, context) {
     super(props, context)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
   }
 
-  async handleFormSubmit ({ email }) {
+  async handleFormSubmit ({email}: formProps) {
     try {
-      const response = await this.props.forgotUser({ email })
+      const response = await this.props.forgotUser({email})
       this.props.reset()
       toastr.success('Success:', response.message)
     } catch (e) {
@@ -29,7 +43,7 @@ class ForgotPasswordComponent extends React.Component {
 
   render () {
     // handleSubmit is a function given to us from Redux-form
-    const { handleSubmit, errorMessage, valid } = this.props
+    const {handleSubmit, errorMessage, valid} = this.props
     const loginErrorText = () => {
       if (errorMessage) {
         return (
@@ -46,7 +60,7 @@ class ForgotPasswordComponent extends React.Component {
       <form className='form' onSubmit={handleSubmit(this.handleFormSubmit)}>
         <h2>I forgot my password</h2>
         <label>Email:</label>
-        <Field
+        <ReduxField
           className='form-control'
           name='email'
           component='input'
@@ -62,11 +76,6 @@ class ForgotPasswordComponent extends React.Component {
     )
   }
 }
-// Login.propTypes = {
-//   handleSubmit: PropTypes.func.isRequired,
-//   actions: PropTypes.object,
-//   errorMessage: PropTypes.string
-// }
 
 // const mapStateToProps = (state, ownProps) => {
 //     return {
@@ -81,7 +90,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const ForgotPasswordForm = reduxForm({ form: 'forgotPasswordForm' })(
+const ForgotPasswordForm = reduxForm({form: 'forgotPasswordForm'})(
   ForgotPasswordComponent
 )
 export default connect(null, mapDispatchToProps)(ForgotPasswordForm)

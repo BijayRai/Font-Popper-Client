@@ -144,6 +144,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
+// Think about adding global error message in new app
 // const mapStateToProps = (state, ownProps) => {
 
 //     return {

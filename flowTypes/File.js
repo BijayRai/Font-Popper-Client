@@ -1,3 +1,5 @@
+// @flow
+
 export type File = {
   lastModified: number,
   lastModifiedDate: any,

@@ -1,22 +1,44 @@
+// @flow
+
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Field, reduxForm, reset } from 'redux-form'
+import { Field as ReduxField, reduxForm } from 'redux-form'
 import renderField from '../inputs/renderField'
 import { resetPassword, saveUserToRedux } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import Router from 'next/router'
+import type { ReduxForm } from '../../flowTypes/reduxForm'
+
+type Actions = {
+  resetPassword: Function,
+  saveUser: Function,
+}
+
+type ValidationProps = {
+  password: string,
+  passwordConfirm: string
+}
+
+type Props = {
+  token: string
+} & Actions & ReduxForm
 
 class PwResetFormComponent extends React.Component {
-  constructor (props, context) {
-    super(props, context)
+  props: Props
+  handleFormSubmit: Function
+
+  constructor (props) {
+    console.log('props', props)
+
+    super(props)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
   }
 
-  async handleFormSubmit ({ password }) {
+  async handleFormSubmit ({password}) {
     const token = this.props.token
     try {
-      await this.props.resetPassword({ password, token })
+      await this.props.resetPassword({password, token})
       Router.push(`/auth/login`, `/login`)
       toastr.success('Success:', ' Password Updated!')
     } catch (e) {
@@ -26,7 +48,7 @@ class PwResetFormComponent extends React.Component {
 
   render () {
     // handleSubmit is a function given to us from Redux-form
-    const { handleSubmit, errorMessage, valid, anyTouched } = this.props
+    const {handleSubmit, errorMessage, valid, anyTouched} = this.props
 
     const loginErrorText = () => {
       if (errorMessage) {
@@ -43,13 +65,13 @@ class PwResetFormComponent extends React.Component {
     return (
       <form className='form' onSubmit={handleSubmit(this.handleFormSubmit)}>
         <h2>Reset Password</h2>
-        <Field
+        <ReduxField
           name='password'
           type='password'
           component={renderField}
           label='Password:'
         />
-        <Field
+        <ReduxField
           name='passwordConfirm'
           type='password'
           component={renderField}
@@ -66,18 +88,12 @@ class PwResetFormComponent extends React.Component {
     )
   }
 }
-// Login.propTypes = {
-//   handleSubmit: PropTypes.func.isRequired,
-//   actions: PropTypes.object,
-//   errorMessage: PropTypes.string
-// }
 
-// const mapStateToProps = (state, ownProps) => {
-//     return {
-//         errorMessage: state.auth.error
-//     };
-// };
-function validate (formProps) {
+type ValidateErrors = {
+  passwordConfirm?: string
+}
+
+function validate (formProps: ValidationProps): ValidateErrors {
   let errors = {}
 
   const requiredFields = ['password', 'passwordConfirm']
@@ -94,7 +110,7 @@ function validate (formProps) {
 
   return errors
 }
-const PwResetForm = reduxForm({ form: 'pwResetForm', validate })(
+const PwResetForm = reduxForm({form: 'pwResetForm', validate})(
   PwResetFormComponent
 )
 

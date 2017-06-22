@@ -1,29 +1,49 @@
+// @flow
+
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Field, reduxForm } from 'redux-form'
+import { Field as ReduxField, reduxForm } from 'redux-form'
 import {
   signinUser,
-  saveUserToRedux,
+  saveUserToRedux
 } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import Router from 'next/router'
-import { getUserFromJWT } from '../../utils/authUtils'
+import { getUserFromJWT, filterUserKeys } from '../../utils/authUtils'
+import type { ReduxForm } from '../../flowTypes/reduxForm'
+import type { User, UserFiltered } from '../../flowTypes/User'
+
+type Actions = {
+  signinUser: Function,
+  saveUser: Function,
+}
+
+type formProps = {
+  email: string,
+  password: string,
+}
+
+type Props = Actions & ReduxForm
 
 class LoginFormComponent extends React.Component {
+  props: Props
+  handleFormSubmit: Function
+
   constructor (props, context) {
     super(props, context)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
   }
 
-  async handleFormSubmit ({ email, password }) {
+  async handleFormSubmit ({email, password}: formProps) {
     try {
-      const response = await this.props.signinUser({ email, password })
-      const user = getUserFromJWT(response.token)
+      const response: { token: string } = await this.props.signinUser({email, password})
+      const user: User = getUserFromJWT(response.token)
+      const filteredUser: UserFiltered = filterUserKeys(user)
       // Add meta data on Login
       // user.hearts = response.hearts
-      this.props.saveUser(user)
-      toastr.success('Success:', user.name + ' Logged In!')
+      this.props.saveUser(filteredUser)
+      toastr.success('Success:', String(filteredUser.name) + ' Logged In!')
       Router.push(`/hidden`)
     } catch (e) {
       toastr.error('Error:', e.message)
@@ -32,7 +52,7 @@ class LoginFormComponent extends React.Component {
 
   render () {
     // handleSubmit is a function given to us from Redux-form
-    const { handleSubmit, errorMessage, valid } = this.props
+    const {handleSubmit, errorMessage, valid} = this.props
     const loginErrorText = () => {
       if (errorMessage) {
         return (
@@ -49,14 +69,14 @@ class LoginFormComponent extends React.Component {
       <form className='form' onSubmit={handleSubmit(this.handleFormSubmit)}>
         <h2>Login</h2>
         <label>Email:</label>
-        <Field
+        <ReduxField
           className='form-control'
           name='email'
           component='input'
           type='email'
         />
         <label>Password:</label>
-        <Field
+        <ReduxField
           className='form-control'
           name='password'
           component='input'
@@ -73,11 +93,6 @@ class LoginFormComponent extends React.Component {
     )
   }
 }
-// Login.propTypes = {
-//   handleSubmit: PropTypes.func.isRequired,
-//   actions: PropTypes.object,
-//   errorMessage: PropTypes.string
-// }
 
 // const mapStateToProps = (state, ownProps) => {
 //     return {
@@ -92,5 +107,5 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const LoginForm = reduxForm({ form: 'loginForm' })(LoginFormComponent)
+const LoginForm = reduxForm({form: 'loginForm'})(LoginFormComponent)
 export default connect(null, mapDispatchToProps)(LoginForm)

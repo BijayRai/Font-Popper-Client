@@ -8,7 +8,8 @@ import {
   logOut,
   saveUserToRedux
 } from '../actions/authActions'
-import type { User } from '../flowTypes/User'
+
+import type { User, UserFiltered } from '../flowTypes/User'
 import type { ReduxStore } from '../flowTypes/reduxStore'
 import type { Action } from '../flowTypes/redux'
 
@@ -162,6 +163,17 @@ export const findCookies = (ctxHeaders: any, ctxReq: any): voidString => {
   }
 }
 
+export const filterUserKeys = (user: User): UserFiltered => {
+  const allowedKeys = ['name', 'email', 'exp', 'sub']
+  const foundKeys: string[] = Object.keys(user).filter((key) => allowedKeys.includes(key))
+  return foundKeys.reduce((obj: UserFiltered, key: any) => {
+    return {
+      ...obj,
+      [key]: user[key]
+    }
+  }, {})
+}
+
 /**
  * getUserFromJWT(arg)
  * - Filter out sensitive info when the token is decoded before adding to redux
@@ -170,25 +182,28 @@ export const findCookies = (ctxHeaders: any, ctxReq: any): voidString => {
  * @returns {Object}
  *
  */
-export const getUserFromJWT = (token: string) => {
-  if (!token) {
-    return undefined
-  }
+export const getUserFromJWT = (token: string): User => {
+  // if (!token) {
+  //   return undefined
+  // }
 
-  const tokenDecoded: User = jwtDecode(token)
-  // Would want to allow metaData here
-  const allowedKeys = ['name', 'email', 'exp', 'sub']
+  // const tokenDecoded: User = jwtDecode(token)
+  // // Would want to allow metaData here
+  // const allowedKeys = ['name', 'email', 'exp', 'sub']
+  //
+  // function keys<T: string> (obj: any): Array<T> {
+  //   return Object.keys(obj)
+  // }
+  //
+  // const foundkeys: string[] = Object.keys(tokenDecoded).filter((key) =>
+  // allowedKeys.includes(key)) const filteredUser: any = foundkeys .reduce((obj: User, key: string
+  // | number) => { return { ...obj, [key]: tokenDecoded[key] } }, {}) const newUser: User =
+  // keys(tokenDecoded) .filter((key) => allowedKeys.includes(key)) .reduce((obj, key) => { return
+  // { ...obj, [key]: tokenDecoded[key] } }, {}) const newUser: User = Object.keys(tokenDecoded)
+  // .filter((key) => allowedKeys.includes(key)) .reduce((obj, key) => { return { ...obj, [key]:
+  // tokenDecoded[key] } }, {})  return newUser
 
-  return Object.keys(tokenDecoded)
-    .filter((key) => allowedKeys.includes(key))
-    .reduce((obj, key) => {
-      return {
-        ...obj,
-        [key]: tokenDecoded[key]
-      }
-    }, {})
-
-  // return jwtDecode(token)
+  return jwtDecode(token)
 }
 
 /**
@@ -200,7 +215,7 @@ export const getUserFromJWT = (token: string) => {
  */
 export const isUserExpired = (user: User): boolean => {
   if (user.exp) {
-    const currentTime: string = moment().unix()
+    const currentTime: number = moment().unix()
     const expired: boolean = user.exp < currentTime // because time goes up
 
     if (expired) {
@@ -221,7 +236,7 @@ export const isUserExpired = (user: User): boolean => {
  * @returns {Object} {Dispatch Action: refreshToken}
  * @returns {Object} {Dispatch Action: saveUserToRedux}
  */
-export const validateUserTokenClient = async (store: ReduxStore, user: User): Action => {
+export const validateUserTokenClient = async (store: ReduxStore, user: User): any => {
   console.log('validateUser-Client')
   if (!user) {
     return store.dispatch(logUserOut())
@@ -248,7 +263,7 @@ export const validateUserTokenClient = async (store: ReduxStore, user: User): Ac
  * @returns {Object} {Dispatch Action: logUserOut} (expired)
  * @returns {Object} {Dispatch Action: saveUserToRedux}
  */
-export const validateUserTokenServer = async (store: ReduxStore, user: User, cookies?: string): Action => {
+export const validateUserTokenServer = async (store: ReduxStore, user: User, cookies?: string): any => {
   /*
    * find cookies on browser(jwt)
    * find user from token and pass user in to this function from getInitialProps on HOC
