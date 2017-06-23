@@ -38,13 +38,14 @@ class LoginFormComponent extends React.Component {
   async handleFormSubmit ({email, password}: formProps) {
     try {
       const response: { token: string } = await this.props.signinUser({email, password})
-      const user: User = getUserFromJWT(response.token)
-      const filteredUser: UserFiltered = filterUserKeys(user)
+      const user: UserFiltered | void = getUserFromJWT(response.token)
       // Add meta data on Login
       // user.hearts = response.hearts
-      this.props.saveUser(filteredUser)
-      toastr.success('Success:', String(filteredUser.name) + ' Logged In!')
-      Router.push(`/hidden`)
+      if (user) {
+        this.props.saveUser(user)
+        toastr.success('Success:', String(user.name) + ' Logged In!')
+        Router.push(`/hidden`)
+      }
     } catch (e) {
       toastr.error('Error:', e.message)
     }

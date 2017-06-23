@@ -1,8 +1,11 @@
+// @flow
+
 import fetch from 'isomorphic-unfetch'
 import env from '../config/envConfig'
+import type {User } from '../flowTypes/User'
 
 class authApi {
-  static async signInUser (user) {
+  static async signInUser (user: User) {
     const url = `${env.BACKEND_URL}/api/signin`
     return fetch(url, {
       method: 'POST',
@@ -15,7 +18,7 @@ class authApi {
     })
   }
 
-  static async signOutUser () {
+  static async signOutUser ():Promise<any> {
     const url = `${env.BACKEND_URL}/api/signout`
     return fetch(url, {
       method: 'GET',

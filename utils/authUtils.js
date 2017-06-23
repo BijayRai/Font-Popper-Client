@@ -11,7 +11,7 @@ import {
 
 import type { User, UserFiltered } from '../flowTypes/User'
 import type { ReduxStore } from '../flowTypes/reduxStore'
-import type { Action } from '../flowTypes/redux'
+import type { DispatchPromise } from '../flowTypes/redux'
 
 type voidString = string | void
 type voidStringArray = string[] | void
@@ -32,6 +32,8 @@ export const unsetToken = () => {
   window.localStorage.setItem('logout', Date.now())
 }
 const stringSplit = (jwtToken: string | void, splitter: string): voidString => {
+  console.log('jwtToken', jwtToken)
+
   if (!jwtToken) return undefined
   return jwtToken
     .split(splitter)[1]
@@ -55,6 +57,7 @@ export const getTokenFromCookie = (request: any): voidString => {
   }
 
   const jwtCookie: string = request.headers.cookie
+
   return stringSplit(findKey(jwtCookie, 'jwt'), '=')
 }
 
@@ -182,12 +185,13 @@ export const filterUserKeys = (user: User): UserFiltered => {
  * @returns {Object}
  *
  */
-export const getUserFromJWT = (token: string): User => {
-  // if (!token) {
-  //   return undefined
-  // }
+export const getUserFromJWT = (token: string): UserFiltered | void => {
+  if (!token) {
+    return undefined
+  }
 
-  // const tokenDecoded: User = jwtDecode(token)
+  const tokenDecoded: User = jwtDecode(token)
+
   // // Would want to allow metaData here
   // const allowedKeys = ['name', 'email', 'exp', 'sub']
   //
@@ -203,7 +207,8 @@ export const getUserFromJWT = (token: string): User => {
   // .filter((key) => allowedKeys.includes(key)) .reduce((obj, key) => { return { ...obj, [key]:
   // tokenDecoded[key] } }, {})  return newUser
 
-  return jwtDecode(token)
+  // return jwtDecode(token)
+  return filterUserKeys(tokenDecoded)
 }
 
 /**
@@ -236,7 +241,7 @@ export const isUserExpired = (user: User): boolean => {
  * @returns {Object} {Dispatch Action: refreshToken}
  * @returns {Object} {Dispatch Action: saveUserToRedux}
  */
-export const validateUserTokenClient = async (store: ReduxStore, user: User): any => {
+export const validateUserTokenClient = async (store: ReduxStore, user: User): DispatchPromise => {
   console.log('validateUser-Client')
   if (!user) {
     return store.dispatch(logUserOut())
@@ -263,7 +268,7 @@ export const validateUserTokenClient = async (store: ReduxStore, user: User): an
  * @returns {Object} {Dispatch Action: logUserOut} (expired)
  * @returns {Object} {Dispatch Action: saveUserToRedux}
  */
-export const validateUserTokenServer = async (store: ReduxStore, user: User, cookies?: string): any => {
+export const validateUserTokenServer = async (store: ReduxStore, user: User, cookies?: string): DispatchPromise => {
   /*
    * find cookies on browser(jwt)
    * find user from token and pass user in to this function from getInitialProps on HOC

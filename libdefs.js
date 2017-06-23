@@ -67,3 +67,6 @@ declare module '../static/images/icons/review.svg' {
 declare module 'react-dropzone' {
   declare var exports: any
 }
+declare module 'isomorphic-unfetch' {
+  declare var exports: any
+}
