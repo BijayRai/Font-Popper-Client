@@ -1,17 +1,24 @@
+// @flow
+
 import React from 'react'
 import { initStore } from '../../store'
 import withRedux from 'next-redux-wrapper'
 import secureLayout from '../../hocs/secureLayout'
 import AccountForm from '../../components/auth/accountForm'
+import type { State } from '../../flowTypes/State'
+import type { Ctx } from '../../flowTypes/Ctx'
+import type { User } from '../../flowTypes/User'
+type Props = {
+  user: User
+}
 const pageTitle = 'My Account'
 
-class Account extends React.Component {
-  static async getInitialProps ({ store, res, query }) {
-    // const user = store.getState().user
+class Account extends React.Component<void, Props, void> {
+  props: Props
+
+  static async getInitialProps ({store, res, query}: Ctx) {
     return {}
   }
-
-  async componentDidMount () {}
 
   render () {
     console.log(this.props.user)
@@ -24,7 +31,7 @@ class Account extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state: State): mixed => {
   return {
     user: state.user
   }

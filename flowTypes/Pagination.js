@@ -1,7 +1,5 @@
 // @flow
 
-
-
 type Pages = {
   ids: [],
   fetching: true

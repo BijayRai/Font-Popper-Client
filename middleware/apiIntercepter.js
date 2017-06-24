@@ -91,7 +91,7 @@ export default function ({dispatch}: { dispatch: Dispatch }) {
         })
       }
 
-      const newAction = {
+      const newAction: Action = {
         type: action.type,
         data: body.data
       }
