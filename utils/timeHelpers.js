@@ -1,5 +1,6 @@
 import moment from 'moment'
-import envConfig from '../config/envConfig'
+// import envConfig from '../config/envConfig'
+import { envConfig } from '../config/envConfigServer'
 
 export const getNewTokenTime = user => {
   const currentTime = moment().unix()

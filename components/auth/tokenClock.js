@@ -1,4 +1,4 @@
-export default ({ time }) => {
+export default ({time}) => {
   return (
     <div>
       <style jsx>{`
@@ -27,12 +27,6 @@ export default ({ time }) => {
         {time.secLeft || 0}
         {' '}
         secs
-      </p>
-      <p>
-        Is token within {time.refreshWindow} min of expiring?
-      </p>
-      <p>
-        {time.refresh.toString()}
       </p>
     </div>
   )

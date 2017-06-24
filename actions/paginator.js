@@ -1,9 +1,12 @@
+// @flow
+
 import actionTypes from './actionTypes'
 import { combineReducers } from 'redux'
+import type { Paginator, PaginatorAction } from '../flowTypes/Pagination'
 
-export const createPaginator = (endpoint, resultKey) => {
+export const createPaginator = (endpoint: string, resultKey: string): Paginator => {
   // action
-  const requestPage = (endpoint, resultKey, page) => {
+  const requestPage = (endpoint: string, resultKey: string, page: number) => {
     return {
       type: actionTypes.REQUEST_PAGE,
       payload: {
@@ -17,7 +20,7 @@ export const createPaginator = (endpoint, resultKey) => {
   }
 
   // action
-  const receivePage = (resultKey, page, results) => {
+  const receivePage = (resultKey: string, page: number, results: any[]) => {
     return {
       type: actionTypes.RECEIVE_PAGE,
       payload: {
@@ -29,8 +32,9 @@ export const createPaginator = (endpoint, resultKey) => {
       }
     }
   }
+
   // Reducer
-  const pages = (pages = {}, action = {}) => {
+  const pages = (pages: any = {}, action: PaginatorAction): any => {
     switch (action.type) {
       case actionTypes.REQUEST_PAGE:
         return {
@@ -58,12 +62,12 @@ export const createPaginator = (endpoint, resultKey) => {
   }
 
   // Reducer
-  const currentPage = (currentPage = 1, action = {}) =>
+  const currentPage = (currentPage: number = 1, action: PaginatorAction) =>
     (action.type === actionTypes.REQUEST_PAGE
       ? action.payload.page
       : currentPage)
 
-  const onlyForEndpoint = reducer => (state = {}, action = {}) => {
+  const onlyForEndpoint = reducer => (state: any = {}, action: PaginatorAction) => {
     if (typeof action.meta === 'undefined') {
       return state
     }
@@ -82,7 +86,7 @@ export const createPaginator = (endpoint, resultKey) => {
     //   : action.meta.endpoint === endpoint ? reducer(state, action) : state)
   }
 
-  const itemsReducer = (items = {}, action = {}) => {
+  const itemsReducer = (items: any = {}, action: any = {}) => {
     switch (action.type) {
       case actionTypes.RECEIVE_PAGE:
         let _items = {}

@@ -70,3 +70,6 @@ declare module 'react-dropzone' {
 declare module 'isomorphic-unfetch' {
   declare var exports: any
 }
+declare module 'next/head' {
+  declare var exports: any
+}

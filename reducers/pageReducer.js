@@ -1,5 +1,3 @@
-import actionTypes from '../actions/actionTypes'
-// import initialState from './initialState'
 import { createPaginator } from '../actions/paginator'
 // Data shape - RECIEVE STORE PAGE
 // pagination: {

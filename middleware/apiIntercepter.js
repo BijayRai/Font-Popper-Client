@@ -1,3 +1,5 @@
+// @flow
+
 import { getUserFromJWT } from '../utils/authUtils'
 import {
   handleMiddlewareError,
@@ -5,8 +7,13 @@ import {
 } from '../utils/errorHandlers'
 import actionTypes from '../actions/actionTypes'
 
-export default function ({ dispatch }) {
-  return next => async action => {
+import type { Dispatch } from 'redux'
+import type { Action, DispatchAction } from '../flowTypes/redux'
+import type { User, UserFiltered } from '../flowTypes/User'
+import type { Response, ResponseBody } from '../flowTypes/Api'
+
+export default function ({dispatch}: { dispatch: Dispatch }) {
+  return (next: Function) => async (action: DispatchAction) => {
     // console.log('Middleware')
     // console.log('action')
     // console.log(action.type)
@@ -17,12 +24,13 @@ export default function ({ dispatch }) {
      * - Ignore apiInterceptor
      *
      */
+
     if (!action.payload || !action.payload.then) {
       return next(action)
     }
 
     try {
-      const response = await action.payload
+      const response: Response = await action.payload
 
       // DEBUG
       // console.log('es6 await promise in middleware')
@@ -33,7 +41,7 @@ export default function ({ dispatch }) {
 
       await handleStatusCheck(response, dispatch, action.type)
 
-      const body = await response.json()
+      const body: ResponseBody = await response.json()
 
       // console.log('body from middleware')
       // console.log(body)
@@ -42,7 +50,7 @@ export default function ({ dispatch }) {
 
       if (body.token && action.type === 'LOG_USER_IN') {
         // Currently this action has no reducer
-        const newAction = {
+        const newAction: Action = {
           type: action.type,
           data: {
             token: body.token,
@@ -79,7 +87,7 @@ export default function ({ dispatch }) {
 
         dispatch({
           type: actionTypes.REFRESH_TOKEN,
-          user: { ...decodedUser }
+          user: {...decodedUser}
         })
       }
 

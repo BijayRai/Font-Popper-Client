@@ -3,10 +3,10 @@
 import actionTypes from './actionTypes'
 import authApi from '../api/authApi'
 import type { Dispatch } from 'redux'
-import type { Action, DispatchPromise } from '../flowTypes/redux'
-import type { User } from '../flowTypes/User'
+import type { Action, DispatchAction } from '../flowTypes/redux'
+import type { User, UserFiltered } from '../flowTypes/User'
 
-export const signinUser = (user: User) => async (dispatch: Dispatch): DispatchPromise => {
+export const signinUser = (user: User) => async (dispatch: Dispatch): DispatchAction => {
   const request: Promise<any> = authApi.signInUser(user)
 
   return dispatch({
@@ -15,20 +15,20 @@ export const signinUser = (user: User) => async (dispatch: Dispatch): DispatchPr
   })
 }
 
-export const logUserOut = () => async (dispatch: Dispatch): DispatchPromise => {
+export const logUserOut = () => async (dispatch: Dispatch): DispatchAction => {
   const request: Promise<any> = authApi.signOutUser()
   return dispatch({type: actionTypes.LOG_OUT, payload: request})
 }
 
 export const logOut = () => ({type: actionTypes.LOG_OUT})
 
-export const saveUserToRedux = (user: User) => (dispatch: Dispatch): DispatchPromise =>
+export const saveUserToRedux = (user: UserFiltered) => (dispatch: Dispatch): DispatchAction =>
   dispatch({
     type: actionTypes.SAVE_USER,
     user
   })
 
-export const authenticateUser = (user: User) => async (dispatch: Dispatch): DispatchPromise => {
+export const authenticateUser = (user: User) => async (dispatch: Dispatch): DispatchAction => {
   const response: Promise<any> = authApi.registerUser(user)
 
   return dispatch({
@@ -37,7 +37,7 @@ export const authenticateUser = (user: User) => async (dispatch: Dispatch): Disp
   })
 }
 
-export const refreshTokenAction = (user: User) => (dispatch: Dispatch): DispatchPromise => {
+export const refreshTokenAction = (user: User) => (dispatch: Dispatch): DispatchAction => {
   const request: Promise<any> = authApi.fetchRefreshTokens(user)
 
   return dispatch({
@@ -53,7 +53,7 @@ export const loadAccountForm = (user: User): Action => {
   }
 }
 
-export const updateUser = (user: User) => (dispatch: Dispatch): DispatchPromise => {
+export const updateUser = (user: User) => (dispatch: Dispatch): DispatchAction => {
   const request: Promise<any> = authApi.updateUser(user)
 
   return dispatch({
@@ -62,7 +62,7 @@ export const updateUser = (user: User) => (dispatch: Dispatch): DispatchPromise 
   })
 }
 
-export const forgotUser = (email: string) => (dispatch: Dispatch): DispatchPromise => {
+export const forgotUser = (email: string) => (dispatch: Dispatch): DispatchAction => {
   const request: Promise<any> = authApi.forgotUser(email)
 
   return dispatch({
@@ -71,7 +71,7 @@ export const forgotUser = (email: string) => (dispatch: Dispatch): DispatchPromi
   })
 }
 
-export const resetPassword = (passwordToken: string) => (dispatch: Dispatch): DispatchPromise => {
+export const resetPassword = (passwordToken: string) => (dispatch: Dispatch): DispatchAction => {
   const request = authApi.resetPassword(passwordToken)
 
   return dispatch({

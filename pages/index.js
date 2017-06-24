@@ -15,8 +15,8 @@ import standardLayout from '../hocs/standardLayout'
 // }
 // const Comp = styled.div`
 //     ${rule1}
-//     `
-const Title = styled.h1`  
+// `
+const Title = styled.h1`
   color: red;
   font-size: 50px;
 
@@ -52,13 +52,19 @@ const Div = styled.div`
     padding-left: 30px;
   `}
 `
-//
+
 // const Title = styled.h1`
 //   ${{ color: "red", fontSize: "50px", fontFamily: "Open Sans", "> a": { fontSize: "18px" } }}`
 
 const pageTitle: string = 'New App'
+type DefaultProps = {
+  getInitialProps: Function
+}
+class HomePage extends React.Component<DefaultProps, {}, void> {
+  static defaultProps = {
+    getInitialProps: () => {}
+  }
 
-class HomePage extends React.Component {
   render () {
     return (
       <div className='inner'>

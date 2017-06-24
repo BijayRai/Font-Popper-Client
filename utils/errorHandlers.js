@@ -1,6 +1,11 @@
+// @flow
+
 import { toastr } from 'react-redux-toastr'
 import Router from 'next/router'
 import { logUserOut } from '../actions/authActions'
+import type { Dispatch } from 'redux'
+import type { Response, ErrorType } from '../flowTypes/Api'
+
 /**
  * handleMiddlewareError(arg) -DEPRICATED-
  * - This function SHOULD BE updated once old async calls are routed through the middleware
@@ -8,24 +13,26 @@ import { logUserOut } from '../actions/authActions'
  * - Currently this is in storeAPI.js
  *
  * @param {Object} error
- * @param {Object} redux dispatch
+ * @param {Object} dispatch
  */
-export const handleMiddlewareError = async (e, dispatch) => {
+  // TODO: CHECK ERRORS AGAIN
+export const handleMiddlewareError = async (error: ErrorType, dispatch: Dispatch) => {
   console.log('handleError from AuthUtils to be UPDATED and FIXED')
-  console.log(e)
+  console.log(error)
 
-  if (e.logout) {
-    toastr.error('Error:', e.message)
-    // dispatch(logUserOut())
+  if (error.logout) {
+    toastr.error('Error:', error.message)
+      // dispatch(logUserOut())
     console.log(
-      'SHOULD LOG USER OUR, BUT SHOULD HAPPEN WITH MIDDLEWARE NOT ERROR HANDLER'
-    )
+        'SHOULD LOG USER OUR, BUT SHOULD HAPPEN WITH MIDDLEWARE NOT ERROR HANDLER'
+      )
 
     Router.push(`/auth/login`, `/login`)
   }
 
-  if (e.showMid) {
-    toastr.error('Error:', e.message)
+    // show middleware error instead of handling error in a component
+  if (error.showMid) {
+    toastr.error('Error:', error.message)
   }
 }
 
@@ -34,12 +41,13 @@ export const handleMiddlewareError = async (e, dispatch) => {
  * - Redux Middleware apiIntercepter status check
  * - Used to upload files/photos
  *
- * @param {Object} api response
+ * @param {Object} response
  * @param {Function} dispatch
- * @returns Action dispatch( logUserOut )
+ * @param {Object} actionType
+ * @returns {Function} actionType dispatch( logUserOut )
  * @returns {Error}
  */
-export const handleStatusCheck = async (response, dispatch, actionType) => {
+export const handleStatusCheck = async (response: Response, dispatch: Dispatch, actionType: string) => {
   console.log('handle Status Check')
   console.log(response.status)
 
@@ -48,7 +56,7 @@ export const handleStatusCheck = async (response, dispatch, actionType) => {
     message: 'There was an error'
   }
 
-  // Specail message for login action error
+  // Special message for login action error
   if (response.status === 401 && actionType === 'LOG_USER_IN') {
     error.message = 'Incorrect Username or password'
     throw error
@@ -65,9 +73,9 @@ export const handleStatusCheck = async (response, dispatch, actionType) => {
     const newError = await response.json()
 
     /*
-    * The registerform could return an array of errors
-    * normally it will just return an {error: 'my error msg'}
-    */
+     * The registerform could return an array of errors
+     * normally it will just return an {error: 'my error msg'}
+     */
     if (Array.isArray(newError.errors)) {
       throw newError.errors
     } else {

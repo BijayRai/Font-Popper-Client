@@ -16,6 +16,7 @@
     "parser": "babel-eslint",
     "globals": [
       "Field",
+      "Class",
       "Element",
       "ReactComponent",
       "ReactElement",

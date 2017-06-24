@@ -1,4 +1,6 @@
-const actionTypes = {
+// @flow
+type ActionTypes = { [string]: string }
+const actionTypes: ActionTypes = {
   // Moment
   TICK: 'TICK',
 

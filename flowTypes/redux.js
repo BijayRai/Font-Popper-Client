@@ -5,7 +5,6 @@ export type Action = {
   type: string,
   payload?: Promise<any> | any,
   error?: boolean,
-  meta?: any,
   user?: any
 }
 
@@ -15,4 +14,4 @@ export type ThunkAction = {
   extraArgument: (any) => any;
 }
 
-export type DispatchPromise = Dispatch<Action>
+export type DispatchAction = Dispatch<Action>

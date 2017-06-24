@@ -11,7 +11,7 @@ import {
 
 import type { User, UserFiltered } from '../flowTypes/User'
 import type { ReduxStore } from '../flowTypes/reduxStore'
-import type { DispatchPromise } from '../flowTypes/redux'
+import type { DispatchAction } from '../flowTypes/redux'
 
 type voidString = string | void
 type voidStringArray = string[] | void
@@ -105,7 +105,7 @@ export const getCookiesFromServerResponse = (ctxHeaders: any): voidStringArray =
  * @param {Object} ctxReq - from Server-side
  * @returns {String} Cookie Token
  */
-export const findTokenToDecode = (ctxHeaders: any, ctxReq: any) => {
+export const findTokenToDecode = (ctxHeaders: any, ctxReq: any): voidString => {
   const cookies: voidStringArray = getCookiesFromServerResponse(ctxHeaders)
 
   if (cookies) {
@@ -185,7 +185,7 @@ export const filterUserKeys = (user: User): UserFiltered => {
  * @returns {Object}
  *
  */
-export const getUserFromJWT = (token: string): UserFiltered | void => {
+export const getUserFromJWT = (token: string | void): UserFiltered | void => {
   if (!token) {
     return undefined
   }
@@ -241,7 +241,7 @@ export const isUserExpired = (user: User): boolean => {
  * @returns {Object} {Dispatch Action: refreshToken}
  * @returns {Object} {Dispatch Action: saveUserToRedux}
  */
-export const validateUserTokenClient = async (store: ReduxStore, user: User): DispatchPromise => {
+export const validateUserTokenClient = async (store: ReduxStore, user: User): DispatchAction => {
   console.log('validateUser-Client')
   if (!user) {
     return store.dispatch(logUserOut())
@@ -268,7 +268,7 @@ export const validateUserTokenClient = async (store: ReduxStore, user: User): Di
  * @returns {Object} {Dispatch Action: logUserOut} (expired)
  * @returns {Object} {Dispatch Action: saveUserToRedux}
  */
-export const validateUserTokenServer = async (store: ReduxStore, user: User, cookies?: string): DispatchPromise => {
+export const validateUserTokenServer = async (store: ReduxStore, user: UserFiltered | void, cookies?: string): DispatchAction => {
   /*
    * find cookies on browser(jwt)
    * find user from token and pass user in to this function from getInitialProps on HOC
