@@ -1,4 +1,13 @@
-export default ({time}) => {
+// @flow
+type Time = {
+  exp: number,
+  isExpired: boolean,
+  minLeft: number,
+  refresh: boolean,
+  refreshWindow: number,
+  secLeft: number
+}
+export default ({isExpired, minLeft, secLeft}: Time) => {
   return (
     <div>
       <style jsx>{`
@@ -16,15 +25,15 @@ export default ({time}) => {
       `}</style>
       <p>Is token expired</p>
       <p>
-        {time.isExpired.toString()}
+        {isExpired.toString()}
       </p>
       <p>Time Left on Token</p>
       <p>
-        {time.minLeft.toString()}
+        {minLeft.toString()}
         {' '}
         min :
         {' '}
-        {time.secLeft || 0}
+        {secLeft || 0}
         {' '}
         secs
       </p>

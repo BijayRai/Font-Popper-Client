@@ -1,10 +1,10 @@
 // @flow
-
+import type { Dispatch } from 'redux'
 export type ReduxStore = {
-  dispatch: Function,
-  getState: Function,
+  dispatch: Dispatch,
+  getState: () => any,
   liftedStore: any,
-  replaceReducer: Function,
-  subscribe: Function,
+  replaceReducer: (any) => any,
+  subscribe: (any) => any,
   'Symbol(observable)': Function
 }

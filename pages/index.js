@@ -57,14 +57,8 @@ const Div = styled.div`
 //   ${{ color: "red", fontSize: "50px", fontFamily: "Open Sans", "> a": { fontSize: "18px" } }}`
 
 const pageTitle: string = 'New App'
-type DefaultProps = {
-  getInitialProps: Function
-}
-class HomePage extends React.Component<DefaultProps, {}, void> {
-  static defaultProps = {
-    getInitialProps: () => {}
-  }
 
+class HomePage extends React.Component<void, {}, void> {
   render () {
     return (
       <div className='inner'>

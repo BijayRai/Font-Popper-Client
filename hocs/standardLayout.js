@@ -13,30 +13,16 @@ import {
   validateUserTokenClient,
   findCookies
 } from '../utils/authUtils'
-import type { DefaultProps } from '../flowTypes/Hoc'
 
-// type HOCComponent<D, P, S> = (component: Class<React$Component<D, *, *>>) => ?React.Element<*>;
-
+import type { Ctx } from '../flowTypes/Ctx'
+import type { State } from '../flowTypes/State'
 type FunctionComponent<P> = (props: P) => ?React.Element<*>;
 type ClassComponent<D, P, S> = Class<React.Component<D, P, S>>
-// ClassComponent.getInitialProps = (ctx: any) => {}
-
-// type Rclass = React.Component<DefaultProps, any, any>
 type Component<D, P> = FunctionComponent<P> | ClassComponent<D, P, any>
-interface PerformerI {
-  static getInitialProps(ctx: any): any;
-}
-type propsFunc = (any) => Promise<any>
-type PerformerStaticsT = {
-  getInitialProps(ctx: any): any;
-}
-type newProps = {
-  getInitialProps: (ctx: any) => any
-  // getInitialProps(): Promise<any>
-}
+
 export default <D: any, P: any> (Page: Component<D, P>, title: string = '') => {
   class standardLayout extends React.Component {
-    static async getInitialProps (ctx) {
+    static async getInitialProps (ctx: Ctx) {
       /**
        * Server-side - check for user passed in from custom express server => populate redux if
        * user is found
@@ -54,14 +40,8 @@ export default <D: any, P: any> (Page: Component<D, P>, title: string = '') => {
 
       let pageProps
       if (typeof Page.getInitialProps === 'function') {
-        // pageProps = Page.getInitialProps ? (await Page.getInitialProps(ctx)) : await
-        // Page.getInitialProps
         pageProps = Page.getInitialProps ? (await Page.getInitialProps(ctx)) : {}
       }
-
-      // send props to the parent > child container
-      // const pageProps =
-      //   (await Page.getInitialProps) && (await Page.getInitialProps(ctx))
 
       return {
         ...pageProps,
@@ -69,7 +49,7 @@ export default <D: any, P: any> (Page: Component<D, P>, title: string = '') => {
       }
     }
 
-    logout: Function
+    logout: () => void
 
     constructor (props) {
       super(props)
@@ -113,7 +93,7 @@ export default <D: any, P: any> (Page: Component<D, P>, title: string = '') => {
     }
   }
 
-  const mapStateToProps = (state) => {
+  const mapStateToProps = (state: State): mixed => {
     return {
       user: state.user
     }

@@ -8,7 +8,7 @@ import { authenticateUser, saveUserToRedux } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import Router from 'next/router'
 import type { ReduxForm } from '../../flowTypes/reduxForm'
-
+import type { Dispatch } from 'redux'
 type Actions = {
   authenticateUser: Function,
   saveUserToRedux: Function,
@@ -137,7 +137,7 @@ const RegisterForm = reduxForm({
   validate
 })(RegisterComponent)
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch): mixed => {
   return {
     authenticateUser: bindActionCreators(authenticateUser, dispatch),
     saveUserToRedux: bindActionCreators(saveUserToRedux, dispatch)

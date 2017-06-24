@@ -1,9 +1,12 @@
 // @flow
 
+
+
 type Pages = {
   ids: [],
   fetching: true
 }
+
 type resultKey = {
   page: Pages,
 }

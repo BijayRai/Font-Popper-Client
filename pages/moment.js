@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import { initStore } from '../store'
 import withRedux from 'next-redux-wrapper'
@@ -7,14 +8,49 @@ import standardLayout from '../hocs/standardLayout'
 import moment from 'moment'
 import { getNewTokenTime } from '../utils/timeHelpers'
 import TokenClock from '../components/auth/tokenClock'
+import type { User } from '../flowTypes/User'
+import type { DispatchAction } from '../flowTypes/redux'
+import type { ReduxStore } from '../flowTypes/reduxStore'
+import type { Dispatch } from 'redux'
 
-class MomentPage extends React.Component {
-  static getInitialProps (ctx) {
+type Time = {
+  exp: number,
+  isExpired: boolean,
+  minLeft: number,
+  refresh: boolean,
+  refreshWindow: number,
+  secLeft: number
+}
+type Props = {
+  user: User,
+  time: Time,
+  dispatch: Dispatch
+}
+type State = {
+  exp: number,
+  isExpired: boolean,
+  minLeft: number,
+  secLeft: number,
+  user: User,
+  time: Time
+}
+type Ctx = {
+  isServer: boolean,
+  pathname: string,
+  query: any,
+  store: ReduxStore
+}
+class MomentPage extends React.Component<void, Props, State> {
+  props: Props
+  timer: DispatchAction
+  state: State
+
+  static getInitialProps (ctx: Ctx) {
     const user = ctx.store.getState().user
     const tokenTime = getNewTokenTime(user)
-    ctx.store.dispatch({ type: 'TICK', tokenTime })
+    ctx.store.dispatch({type: 'TICK', tokenTime})
 
-    return { user }
+    return {user}
   }
 
   componentDidMount () {
@@ -38,17 +74,17 @@ class MomentPage extends React.Component {
       const secCount = moment
         .duration(timeLeft.asSeconds() - 1, 'seconds')
         .seconds()
-      const readyForRefresh = minLeft < this.state.refreshWindow && secCount > 0
+      // const readyForRefresh = minLeft < this.state.refreshWindow && secCount > 0
       this.setState({
         isExpired: expired,
         minLeft: minLeft,
-        secLeft: secCount,
-        refresh: readyForRefresh
+        secLeft: secCount
       })
     }, 1000)
   }
 
   render () {
+    const {exp} = this.props.time
     return (
       <div className='inner'>
         <style jsx>{`
@@ -65,11 +101,11 @@ class MomentPage extends React.Component {
         }
       `}</style>
         <h2>Token Time</h2>
-        <div className={!this.props.time.exp ? 'show' : 'hide'}>
+        <div className={!exp ? 'show' : 'hide'}>
           No Token Found
         </div>
-        <div className={this.props.time.exp ? 'show' : 'hide'}>
-          <TokenClock {...this.props} />
+        <div className={exp ? 'show' : 'hide'}>
+          <TokenClock {...this.props.time} />
         </div>
 
       </div>
@@ -77,14 +113,14 @@ class MomentPage extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state: State): mixed => {
   return {
     user: state.user,
     time: state.time
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     startClock: bindActionCreators(startClock, dispatch)
   }

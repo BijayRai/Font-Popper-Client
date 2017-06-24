@@ -1,13 +1,14 @@
+// @flow
+
 import React, { Component } from 'react'
-// import { bindActionCreators } from 'redux'
-// import * as actions from '../../actions/formSubmitActions'
 import { initStore } from '../../store'
 import withRedux from 'next-redux-wrapper'
 import standardLayout from '../../hocs/standardLayout'
 import RegisterForm from '../../components/auth/registerForm'
 import styled from 'styled-components'
+import type { Ctx } from '../../flowTypes/Ctx'
 
-const pageTitle = 'Register'
+const pageTitle: string = 'Register'
 
 const Wrapper = styled.div`
   padding: 30px 10px;
@@ -17,12 +18,13 @@ const Inner = styled(Wrapper)`
   margin: 0 auto;
 `
 
-export class RegisterPage extends Component {
-  static async getInitialProps ({ store, res, query }) {
+export class RegisterPage extends Component<void, {}, void> {
+  static async getInitialProps ({store, res, query}: Ctx) {
     // Get storeID
     // await store.dispatch(getStores())
-    return { query }
+    return {query}
   }
+
   render () {
     return (
       <Inner>

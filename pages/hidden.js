@@ -3,10 +3,12 @@ import React from 'react'
 import { initStore } from '../store'
 import withRedux from 'next-redux-wrapper'
 import secureLayout from '../hocs/secureLayout'
+import type { User } from '../flowTypes/User'
+import type { State } from '../flowTypes/State'
 const pageTitle = 'Favs'
 
 type Props = {
-  user: any
+  user: User
 }
 class HiddenPage extends React.Component<void, Props, void> {
   static async getInitialProps (ctx) {
@@ -24,7 +26,7 @@ class HiddenPage extends React.Component<void, Props, void> {
   }
 }
 
-const mapStateToProps: Function = (state): Object => {
+const mapStateToProps = (state: State): mixed => {
   return {
     user: state.user
   }
