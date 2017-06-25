@@ -3,14 +3,40 @@ const moment = require('moment')
 const fetch = require('isomorphic-unfetch')
 const config = require('../config/envConfigServer')
 
+// type CookiesFromServer = {
+//   [string]: any
+// }
+// type Jwt = {
+//   sub: number,
+//   email: string,
+//   name: string,
+//   csrf: string,
+//   rfs: string,
+//   exp: number,
+//   iat: string
+// }
+// type UserFiltered = {
+//   isAuthenticated?: boolean,
+//   sub?: string,
+//   name?: string,
+//   email?: string,
+//   exp?: number,
+//   gravatar?: string,
+//   hearts?: string[],
+//   csrf?: string,
+//   rfs?: string,
+//   iat?: string
+// }
+// type voidString = string | void
+
 /**
  * extractJWTFromCookieParser(arg)
  *
- * @param [Array] server cookies array
+ * @param {Object} cookies - server cookies array
  * @returns {String} undefined
  * @returns {String} cookie string
  */
-exports.extractJWTFromCookieParser = cookies => {
+exports.extractJWTFromCookieParser = (cookies) => {
   // console.log('cookies - extractJWTFromCookieParser')
   // console.log(cookies)
 
@@ -28,7 +54,8 @@ exports.extractJWTFromCookieParser = cookies => {
  * @returns {String} undefined
  * @returns {String} cookie string
  */
-exports.extractUserFromJwt = jwt => {
+// NOT CURRENTLY USED
+exports.extractUserFromJwt = (jwt) => {
   const jwtDecoded = jwtDecode(jwt)
   return {
     email: jwtDecoded.email,
@@ -38,6 +65,9 @@ exports.extractUserFromJwt = jwt => {
 }
 
 exports.getJwtFromCookie = cookie => {
+  console.log('cookie from String Split', cookie)
+
+  // return stringSplit(findKey(cookie, 'jwt'), '=')
   return cookie.split(';').find(c => c.trim().startsWith('jwt=')).split('=')[1]
 }
 
@@ -100,7 +130,7 @@ exports.resetCheck = async resetToken => {
       'Content-Type': 'application/json'
     },
     credentials: 'include', // Don't forget to specify this if you need cookies
-    body: JSON.stringify({ resetToken: resetToken })
+    body: JSON.stringify({resetToken: resetToken})
   })
 }
 
@@ -113,7 +143,7 @@ exports.confirmCheck = async validationToken => {
         'Content-Type': 'application/json'
       },
       credentials: 'include', // Don't forget to specify this if you need cookies
-      body: JSON.stringify({ token: validationToken })
+      body: JSON.stringify({token: validationToken})
     }
   )
 

@@ -1,12 +1,12 @@
+// @flow
+
 import actionTypes from '../actions/actionTypes'
 import initialState from './initialState'
+import type { Action } from '../flowTypes/redux'
+import type { User } from '../flowTypes/User'
 
-export const authReducer = (state = initialState.user, action) => {
+export const authReducer = (state: User = initialState.user, action: Action): User => {
   switch (action.type) {
-    // case actionTypes.TOGGLE_LOGIN:
-    //   return Object.assign({}, state, {
-    //     isAuthenticated: !state.isAuthenticated
-    //   })
     case actionTypes.SAVE_USER:
       return Object.assign({}, state, {
         ...action.user,

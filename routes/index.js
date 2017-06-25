@@ -1,7 +1,7 @@
 const tokenCtrl = require('../serverMiddleware/tokenCtrl')
 const port = process.env.PORT || 3000
 const tokenUtils = require('../utils/serverUtilsTokens')
-const querystring = require('querystring')
+const queryString = require('querystring')
 
 exports.routes = (expressServer, app, handle) => {
   // I think TOP level pages dont need a link
@@ -30,7 +30,7 @@ exports.routes = (expressServer, app, handle) => {
     const response = await tokenUtils.confirmCheck(validationToken)
 
     if (response.status === 422) {
-      const query = querystring.stringify({
+      const query = queryString.stringify({
         error: true
       })
       return res.redirect('/register?' + query)
@@ -59,7 +59,7 @@ exports.routes = (expressServer, app, handle) => {
     const response = await tokenUtils.resetCheck(resetToken)
 
     if (response.status === 422) {
-      const query = querystring.stringify({
+      const query = queryString.stringify({
         error: true
       })
       return res.redirect('/login?' + query)

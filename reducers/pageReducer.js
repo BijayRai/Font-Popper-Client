@@ -1,4 +1,6 @@
+// @flow
 import { createPaginator } from '../actions/paginator'
+import type { Paginator } from '../flowTypes/Pagination'
 // Data shape - RECIEVE STORE PAGE
 // pagination: {
 //     pages: {
@@ -9,4 +11,4 @@ import { createPaginator } from '../actions/paginator'
 //     }
 // }
 
-export const pagination = createPaginator('/stores', 'stores')
+export const pagination: Paginator = createPaginator('/stores', 'stores')

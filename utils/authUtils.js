@@ -220,8 +220,11 @@ export const getUserFromJWT = (token: string | void): UserFiltered | void => {
  */
 export const isUserExpired = (user: User): boolean => {
   if (user.exp) {
+    let expired: boolean = false
     const currentTime: number = moment().unix()
-    const expired: boolean = user.exp < currentTime // because time goes up
+    if (user.exp) {
+      expired = user.exp < currentTime // because time goes up
+    }
 
     if (expired) {
       return true

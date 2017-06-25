@@ -2,11 +2,11 @@
 
 import actionTypes from './actionTypes'
 import { combineReducers } from 'redux'
-import type { Paginator, PaginatorAction } from '../flowTypes/Pagination'
+import type { Paginator, PaginatorAction, PaginationState, PaginatorRequestAction } from '../flowTypes/Pagination'
 
 export const createPaginator = (endpoint: string, resultKey: string): Paginator => {
   // action
-  const requestPage = (endpoint: string, resultKey: string, page: number) => {
+  const requestPage = (endpoint: string, resultKey: string, page: number): PaginatorRequestAction => {
     return {
       type: actionTypes.REQUEST_PAGE,
       payload: {
@@ -20,7 +20,7 @@ export const createPaginator = (endpoint: string, resultKey: string): Paginator 
   }
 
   // action
-  const receivePage = (resultKey: string, page: number, results: any[]) => {
+  const receivePage = (resultKey: string, page: number, results: PaginatorAction) => {
     return {
       type: actionTypes.RECEIVE_PAGE,
       payload: {
@@ -34,10 +34,10 @@ export const createPaginator = (endpoint: string, resultKey: string): Paginator 
   }
 
   // Reducer
-  const pages = (pages: any = {}, action: PaginatorAction): any => {
+  const pages = (pages: PaginationState, action: PaginatorAction): PaginationState => {
     switch (action.type) {
       case actionTypes.REQUEST_PAGE:
-        return {
+        return Object.assign({}, pages, {
           ...pages,
           [action.meta.resultKey]: {
             [action.payload.page]: {
@@ -45,9 +45,9 @@ export const createPaginator = (endpoint: string, resultKey: string): Paginator 
               fetching: true
             }
           }
-        }
+        })
       case actionTypes.RECEIVE_PAGE:
-        return {
+        return Object.assign({}, pages, {
           ...pages,
           [resultKey]: {
             [action.payload.page]: {
@@ -55,7 +55,7 @@ export const createPaginator = (endpoint: string, resultKey: string): Paginator 
               fetching: false
             }
           }
-        }
+        })
       default:
         return pages
     }

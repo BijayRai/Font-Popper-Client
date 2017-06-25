@@ -1,12 +1,18 @@
-export default {
+// @flow
+import type { State } from '../flowTypes/State'
+
+const initialState: State = {
   time: 0,
   isSaving: false,
   user: {
     isAuthenticated: false
   },
+  form: {},
   userAccount: {},
-  filtered: {
-    tags: [],
-    stores: []
-  }
+  pagination: {
+    pages: {}
+  },
+  toaster: {}
 }
+
+export default initialState

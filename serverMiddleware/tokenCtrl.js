@@ -1,8 +1,8 @@
 const tokenUtils = require('../utils/serverUtilsTokens')
 /*
-* This middleware attaches USER to the req if a user is present
-* from a token refresh
-*/
+ * This middleware attaches USER to the req if a user is present
+ * from a token refresh
+ */
 
 exports.tokenRefreshCheck = async (req, res, next) => {
   console.log('REFRESH CHECK in EXPRESS')
@@ -11,8 +11,8 @@ exports.tokenRefreshCheck = async (req, res, next) => {
   // console.log('req cookies from token ctrl')
 
   const jwt = tokenUtils.extractJWTFromCookieParser(req.cookies)
-  // console.log('JWT')
-  // console.log(jwt)
+  console.log('JWT - tokenUtils')
+  console.log(jwt)
 
   if (!jwt) {
     console.log('no token found next.js server')

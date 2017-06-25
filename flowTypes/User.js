@@ -1,16 +1,16 @@
 // @flow
 
 export type User = {
-  isAuthenticated: boolean,
-  sub: string,
-  name: string,
-  email: string,
-  exp: number,
-  gravatar?: string,
-  hearts?: string[],
-  csrf?: string,
-  rfs?: string,
-  iat?: string
+  +isAuthenticated: boolean,
+  +sub?: string,
+  +name?: string,
+  +email?: string,
+  +exp?: number,
+  +gravatar?: string,
+  +hearts?: string[],
+  +csrf?: string,
+  +rfs?: string,
+  +iat?: string
 }
 
 export type UserFiltered = {
@@ -25,3 +25,9 @@ export type UserFiltered = {
   rfs?: string,
   iat?: string
 }
+
+// declare module 'Test' {
+//   declare type userTest = {
+//     name: string
+//   }
+// }

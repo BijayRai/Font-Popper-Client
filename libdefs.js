@@ -73,3 +73,6 @@ declare module 'isomorphic-unfetch' {
 declare module 'next/head' {
   declare var exports: any
 }
+declare module 'form-data' {
+  declare var exports: any
+}
