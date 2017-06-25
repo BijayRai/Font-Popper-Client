@@ -7,7 +7,7 @@ import renderField from '../inputs/renderField'
 import { authenticateUser, saveUserToRedux } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import Router from 'next/router'
-import type { ReduxForm } from '../../flowTypes/reduxForm'
+import type { ReduxForm } from '../../flowTypes/redux'
 import type { Dispatch } from 'redux'
 type Actions = {
   authenticateUser: Function,
@@ -70,7 +70,7 @@ class RegisterComponent extends Component {
     return (
       <form className='form' onSubmit={handleSubmit(this.handleFormSubmit)}>
         <h2>Sign Up</h2>
-        <ReduxField name='name' type='text' component={renderField} label='Name:' />
+        <ReduxField name='name' type='text' component={renderField} label='Name:'/>
         <ReduxField
           name='email'
           type='email'

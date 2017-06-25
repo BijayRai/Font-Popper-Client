@@ -6,7 +6,7 @@ import withRedux from 'next-redux-wrapper'
 import standardLayout from '../../hocs/standardLayout'
 import RegisterForm from '../../components/auth/registerForm'
 import styled from 'styled-components'
-import type { Ctx } from '../../flowTypes/Ctx'
+import type { Ctx } from '../../flowTypes/Api'
 
 const pageTitle: string = 'Register'
 

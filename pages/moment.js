@@ -9,8 +9,7 @@ import moment from 'moment'
 import { getNewTokenTime } from '../utils/timeHelpers'
 import TokenClock from '../components/auth/tokenClock'
 import type { User } from '../flowTypes/User'
-import type { DispatchAction } from '../flowTypes/redux'
-import type { ReduxStore } from '../flowTypes/reduxStore'
+import type { DispatchAction, ReduxStore } from '../flowTypes/redux'
 import type { Dispatch } from 'redux'
 
 type Time = {

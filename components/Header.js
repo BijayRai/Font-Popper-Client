@@ -5,7 +5,7 @@ import Login from './nav/login'
 import { nav } from '../components/nav/links'
 import { renderSvg } from '../utils/genericHelpers'
 import type { User } from '../flowTypes/User'
-import type { Nav } from '../flowTypes/Nav'
+import type { Nav } from '../flowTypes/Components'
 
 // File links array based on if user is authenticated
 //     .filter(l => !l.authRequired || (l.authRequired && isAuthenticated))
@@ -23,7 +23,7 @@ const getLinks = (isAuthenticated: boolean, nav: Nav) => {
         <li key={link.slug} className='nav__item'>
           <Link prefetch href={link.slug}>
             <a className='nav__link'>
-              {renderSvg(link.icon)}
+              {renderSvg(String(link.icon))}
               <span>{link.title}</span>
             </a>
           </Link>
@@ -43,7 +43,7 @@ export default connect(state => state)(({url, user}: Props) => {
           <li className='nav__item'>
             <Link prefetch href='/'>
               <a className='nav__link nav__link--logo'>
-                {renderSvg(nav.LOGO)}
+                {renderSvg(String(nav.LOGO))}
               </a>
             </Link>
           </li>

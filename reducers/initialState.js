@@ -1,5 +1,5 @@
 // @flow
-import type { State } from '../flowTypes/State'
+import type { State } from '../flowTypes/redux'
 
 const initialState: State = {
   time: 0,

@@ -6,7 +6,7 @@ import { Field as ReduxField, reduxForm, reset } from 'redux-form'
 import * as actions from '../../actions/authActions'
 import renderField from '../../components/inputs/renderField'
 import { toastr } from 'react-redux-toastr'
-import type { ReduxForm } from '../../flowTypes/reduxForm'
+import type { ReduxForm } from '../../flowTypes/redux'
 import type { User } from '../../flowTypes/User'
 
 type Actions = {

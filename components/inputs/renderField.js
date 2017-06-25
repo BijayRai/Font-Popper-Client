@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import type { RenderField } from '../../flowTypes/reduxRenderFormField'
+import type { RenderField } from '../../flowTypes/redux'
 
 type Props = RenderField
 export const renderField = (props: Props) => {

@@ -9,7 +9,7 @@ import {
   forgotUser
 } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
-import type { ReduxForm } from '../../flowTypes/reduxForm'
+import type { ReduxForm } from '../../flowTypes/redux'
 
 type Actions = {
   forgotUser: Function,

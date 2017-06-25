@@ -8,7 +8,7 @@ import renderField from '../inputs/renderField'
 import { resetPassword, saveUserToRedux } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import Router from 'next/router'
-import type { ReduxForm } from '../../flowTypes/reduxForm'
+import type { ReduxForm } from '../../flowTypes/redux'
 
 type Actions = {
   resetPassword: Function,

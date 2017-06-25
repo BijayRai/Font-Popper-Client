@@ -14,8 +14,8 @@ import {
   findCookies
 } from '../utils/authUtils'
 
-import type { Ctx } from '../flowTypes/Ctx'
-import type { State } from '../flowTypes/State'
+import type { Ctx } from '../flowTypes/Api'
+import type { State } from '../flowTypes/redux'
 type FunctionComponent<P> = (props: P) => ?React.Element<*>;
 type ClassComponent<D, P, S> = Class<React.Component<D, P, S>>
 type Component<D, P> = FunctionComponent<P> | ClassComponent<D, P, any>

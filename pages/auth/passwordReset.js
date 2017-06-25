@@ -6,8 +6,8 @@ import withRedux from 'next-redux-wrapper'
 import standardLayout from '../../hocs/standardLayout'
 import PasswordResetForm from '../../components/auth/passwordResetForm'
 
-import type { State } from '../../flowTypes/State'
-import type { Ctx } from '../../flowTypes/Ctx'
+import type { State } from '../../flowTypes/redux'
+import type { Ctx } from '../../flowTypes/Api'
 type Token = {
   token: string
 }
@@ -26,7 +26,7 @@ class PasswordReset extends React.Component<void, Props, void> {
   render () {
     return (
       <div className='inner' style={{paddingTop: 30}}>
-        <PasswordResetForm token={this.props.query.token} />
+        <PasswordResetForm token={this.props.query.token}/>
       </div>
     )
   }

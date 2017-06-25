@@ -7,7 +7,7 @@ import standardLayout from '../../hocs/standardLayout'
 import LoginForm from '../../components/auth/loginForm'
 import ForgotPasswordForm from '../../components/auth/forgotPasswordForm'
 import { toastr } from 'react-redux-toastr'
-import type { Ctx } from '../../flowTypes/Ctx'
+import type { Ctx } from '../../flowTypes/Api'
 
 type Error = {
   error: string

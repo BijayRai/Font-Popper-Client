@@ -1,7 +1,7 @@
 // @flow
 // const { svgs } = require('../../config/svgs')
 import { svgs } from '../../config/svgs'
-import type { Nav } from '../../flowTypes/Nav'
+import type { Nav } from '../../flowTypes/Components'
 
 const navLinks: Nav = {
   LOGO: svgs.Logo,

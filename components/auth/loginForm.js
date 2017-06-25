@@ -10,9 +10,9 @@ import {
 } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import Router from 'next/router'
-import { getUserFromJWT, filterUserKeys } from '../../utils/authUtils'
-import type { ReduxForm } from '../../flowTypes/reduxForm'
-import type { User, UserFiltered } from '../../flowTypes/User'
+import { getUserFromJWT } from '../../utils/authUtils'
+import type { ReduxForm } from '../../flowTypes/redux'
+import type { UserFiltered } from '../../flowTypes/User'
 
 type Actions = {
   signinUser: Function,

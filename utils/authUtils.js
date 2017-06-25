@@ -10,8 +10,7 @@ import {
 } from '../actions/authActions'
 
 import type { User, UserFiltered } from '../flowTypes/User'
-import type { ReduxStore } from '../flowTypes/reduxStore'
-import type { DispatchAction } from '../flowTypes/redux'
+import type { DispatchAction, ReduxStore } from '../flowTypes/redux'
 
 type voidString = string | void
 type voidStringArray = string[] | void

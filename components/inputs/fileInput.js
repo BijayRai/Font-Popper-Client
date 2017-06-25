@@ -1,8 +1,8 @@
 // @flow
 import Dropzone from 'react-dropzone'
 import React from 'react'
-import type { InputField, InputMeta } from '../../flowTypes/reduxRenderFormField'
-import type { File } from '../../flowTypes/File'
+import type { InputField, InputMeta } from '../../flowTypes/redux'
+import type { File } from '../../flowTypes/Components'
 
 type State = {
   preview: null | string
@@ -69,7 +69,7 @@ class renderDropzoneInput extends React.Component <void, Props, State> {
         {meta.invalid &&
         meta.error &&
         <span className='error'>{meta.error}</span>}
-        {preview && <img src={preview} alt='image preview' />}
+        {preview && <img src={preview} alt='image preview'/>}
         {files &&
         Array.isArray(files) &&
         <ul>

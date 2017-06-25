@@ -4,7 +4,7 @@ import { initStore } from '../store'
 import withRedux from 'next-redux-wrapper'
 import secureLayout from '../hocs/secureLayout'
 import type { User } from '../flowTypes/User'
-import type { State } from '../flowTypes/State'
+import type { State } from '../flowTypes/redux'
 const pageTitle = 'Favs'
 
 type Props = {

@@ -5,8 +5,8 @@ import { initStore } from '../../store'
 import withRedux from 'next-redux-wrapper'
 import secureLayout from '../../hocs/secureLayout'
 import AccountForm from '../../components/auth/accountForm'
-import type { State } from '../../flowTypes/State'
-import type { Ctx } from '../../flowTypes/Ctx'
+import type { State } from '../../flowTypes/redux'
+import type { Ctx } from '../../flowTypes/Api'
 import type { User } from '../../flowTypes/User'
 type Props = {
   user: User
@@ -25,7 +25,7 @@ class Account extends React.Component<void, Props, void> {
 
     return (
       <div className='inner'>
-        <AccountForm selectedUser={this.props.user} />
+        <AccountForm selectedUser={this.props.user}/>
       </div>
     )
   }

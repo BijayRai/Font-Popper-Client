@@ -1,3 +1,6 @@
+// @flow
+import type { ReduxStore } from './redux'
+
 export type Response = {
   body: any,
   bodyUsed: boolean,
@@ -21,4 +24,13 @@ export type ResponseBody = {
   data: any,
   token?: string,
   hearts: string[]
+}
+
+export type Ctx = {
+  isServer: boolean,
+  pathname: string,
+  query: any,
+  store: ReduxStore,
+  req: any,
+  res: any
 }
