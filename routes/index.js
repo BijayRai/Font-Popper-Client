@@ -1,6 +1,8 @@
-const tokenCtrl = require('../serverMiddleware/tokenCtrl')
+// const tokenUtils = require('../serverMiddleware/serverUtilsTokens')
+// const tokenCtrl = require('../serverMiddleware/tokenCtrl')
+const tokenCtrl = require('../serverCompiled/tokenCtrl')
+const tokenUtils = require('../serverCompiled/serverUtilsTokens')
 const port = process.env.PORT || 3000
-const tokenUtils = require('../utils/serverUtilsTokens')
 const queryString = require('querystring')
 
 exports.routes = (expressServer, app, handle) => {

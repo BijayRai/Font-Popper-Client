@@ -25,9 +25,3 @@ export type UserFiltered = {
   rfs?: string,
   iat?: string
 }
-
-// declare module 'Test' {
-//   declare type userTest = {
-//     name: string
-//   }
-// }
