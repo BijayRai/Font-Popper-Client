@@ -5,25 +5,24 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Field as ReduxField, reduxForm } from 'redux-form'
 import {
-  signinUser,
-  saveUserToRedux
+  signinUser
 } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import Router from 'next/router'
-import type { ReduxForm } from '../../flowTypes/redux'
-import type { UserLoginSuccessMiddleware } from '../../flowTypes/Actions'
+import type { User } from '../../flowTypes/User'
+import type { signinUserFunc } from '../../flowTypes/Actions'
 
-type Actions = {
-  signinUser: Function,
-  saveUser: Function,
+type Props = {
+  signinUser: signinUserFunc,
+  errorMessage: string,
+  handleSubmit: any,
+  valid: boolean
 }
 
 type formProps = {
   email: string,
   password: string,
 }
-
-type Props = Actions & ReduxForm
 
 class LoginFormComponent extends React.Component {
   props: Props
@@ -37,7 +36,7 @@ class LoginFormComponent extends React.Component {
   async handleFormSubmit ({ email, password }: formProps) {
     try {
       // const user: { token: string } = await this.props.signinUser({email, password})
-      const {user}: UserLoginSuccessMiddleware = await this.props.signinUser({ email, password })
+      const { user }: { user: User } = await this.props.signinUser({ email, password })
 
       if (user) {
         toastr.success('Success:', String(user.name) + ' Logged In!')
@@ -100,8 +99,7 @@ class LoginFormComponent extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signinUser: bindActionCreators(signinUser, dispatch),
-    saveUser: bindActionCreators(saveUserToRedux, dispatch)
+    signinUser: bindActionCreators(signinUser, dispatch)
   }
 }
 

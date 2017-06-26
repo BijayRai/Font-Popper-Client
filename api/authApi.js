@@ -2,8 +2,13 @@
 
 import fetch from 'isomorphic-unfetch'
 import { envConfig as env } from '../config/envConfigServer'
-import type { User, UserFiltered } from '../flowTypes/User'
-
+import type { UserFiltered } from '../flowTypes/User'
+type RegisterProps = {
+  email: string,
+  name: string,
+  password: string,
+  passwordConfirm: string
+}
 class authApi {
   static async signInUser (user: UserFiltered): Promise<any> {
     const url = `${env.BACKEND_URL}/api/signin`
@@ -28,7 +33,7 @@ class authApi {
     })
   }
 
-  static async registerUser (user: User): Promise<any> {
+  static async registerUser (formProps: RegisterProps): Promise<any> {
     const url = `${env.BACKEND_URL}/api/register`
     return fetch(url, {
       method: 'POST',
@@ -36,7 +41,7 @@ class authApi {
         'Content-Type': 'application/json'
       },
       credentials: 'include', // Don't forget to specify this if you need cookies
-      body: JSON.stringify(user)
+      body: JSON.stringify(formProps)
     })
   }
 
@@ -48,7 +53,7 @@ class authApi {
     })
   }
 
-  static async updateUser (user: User): Promise<any> {
+  static async updateUser (user: UserFiltered): Promise<any> {
     const url = `${env.BACKEND_URL}/api/account`
     return fetch(url, {
       method: 'POST',
@@ -60,7 +65,7 @@ class authApi {
     })
   }
 
-  static async forgotUser (email: string): Promise<any> {
+  static async forgotUser (formData: { email: string }): Promise<any> {
     const url = `${env.BACKEND_URL}/api/account/forgot`
     return fetch(url, {
       method: 'POST',
@@ -68,11 +73,11 @@ class authApi {
         'Content-Type': 'application/json'
       },
       credentials: 'include',
-      body: JSON.stringify(email)
+      body: JSON.stringify(formData)
     })
   }
 
-  static async resetPassword (passwordToken: string): Promise<any> {
+  static async resetPassword (passwordToken: { password: string, token: string }): Promise<any> {
     const url = `${env.BACKEND_URL}/api/account/reset`
     return fetch(url, {
       method: 'POST',

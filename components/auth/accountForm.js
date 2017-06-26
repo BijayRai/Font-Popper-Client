@@ -6,24 +6,24 @@ import { Field as ReduxField, reduxForm, reset } from 'redux-form'
 import * as actions from '../../actions/authActions'
 import renderField from '../../components/inputs/renderField'
 import { toastr } from 'react-redux-toastr'
-import type { ReduxForm } from '../../flowTypes/redux'
-import type { User } from '../../flowTypes/User'
+import type { User, UserFiltered } from '../../flowTypes/User'
+import type { loadAccountFormFunc, saveUserFunc, updateUserFunc } from '../../flowTypes/Actions'
 
-type Actions = {
-  load: Function,
-  reset: Function,
-  saveUserToRedux: Function,
-  updateUser: Function,
+type Props = {
+  selectedUser: User,
+  load: loadAccountFormFunc,
+  reset: any,
+  saveUserToRedux: saveUserFunc,
+  updateUser: updateUserFunc,
+  errorMessage: string,
+  handleSubmit: any,
+  valid: boolean
 }
 
 type formProps = {
   email: string,
-  name: string,
+  name: string
 }
-
-type Props = {
-  selectedUser: User
-} & Actions & ReduxForm
 
 class AccountFormInit extends React.Component {
   props: Props
@@ -39,9 +39,9 @@ class AccountFormInit extends React.Component {
     this.props.load(this.props.selectedUser)
   }
 
-  async handleFormSubmit (formProps: formProps) {
+  async handleFormSubmit (formProps: UserFiltered) {
     try {
-      const response = await this.props.updateUser(formProps)
+      const response: UserFiltered = await this.props.updateUser(formProps)
       this.props.saveUserToRedux(response)
       toastr.success('Saved', 'User Saved Successfully!')
     } catch (e) {

@@ -5,22 +5,22 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Field as ReduxField, reduxForm } from 'redux-form'
 import {
-  saveUserToRedux,
   forgotUser
 } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
-import type { ReduxForm } from '../../flowTypes/redux'
-
-type Actions = {
-  forgotUser: Function,
-  saveUser: Function,
-}
+import type { forgotUserFunc } from '../../flowTypes/Actions'
 
 type formProps = {
   email: string,
 }
 
-type Props = Actions & ReduxForm
+type Props = {
+  forgotUser: forgotUserFunc,
+  reset: any,
+  errorMessage: string,
+  handleSubmit: any,
+  valid: boolean
+}
 
 class ForgotPasswordComponent extends React.Component {
   props: Props
@@ -31,9 +31,9 @@ class ForgotPasswordComponent extends React.Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
   }
 
-  async handleFormSubmit ({email}: formProps) {
+  async handleFormSubmit ({ email }: formProps) {
     try {
-      const response = await this.props.forgotUser({email})
+      const response = await this.props.forgotUser({ email })
       this.props.reset()
       toastr.success('Success:', response.message)
     } catch (e) {
@@ -43,7 +43,7 @@ class ForgotPasswordComponent extends React.Component {
 
   render () {
     // handleSubmit is a function given to us from Redux-form
-    const {handleSubmit, errorMessage, valid} = this.props
+    const { handleSubmit, errorMessage, valid } = this.props
     const loginErrorText = () => {
       if (errorMessage) {
         return (
@@ -85,12 +85,11 @@ class ForgotPasswordComponent extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    forgotUser: bindActionCreators(forgotUser, dispatch),
-    saveUser: bindActionCreators(saveUserToRedux, dispatch)
+    forgotUser: bindActionCreators(forgotUser, dispatch)
   }
 }
 
-const ForgotPasswordForm = reduxForm({form: 'forgotPasswordForm'})(
+const ForgotPasswordForm = reduxForm({ form: 'forgotPasswordForm' })(
   ForgotPasswordComponent
 )
 export default connect(null, mapDispatchToProps)(ForgotPasswordForm)

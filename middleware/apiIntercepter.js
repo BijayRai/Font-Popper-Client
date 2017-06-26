@@ -8,12 +8,13 @@ import {
 import { actionTypes } from '../actions/actionTypes'
 
 import type { Dispatch } from 'redux'
-import type { Action, DispatchAction } from '../flowTypes/redux'
+import type { Action } from '../flowTypes/redux'
+import type { DispatchActionDynamic } from '../flowTypes/Actions'
 import type { UserFiltered } from '../flowTypes/User'
 import type { Response, ResponseBody } from '../flowTypes/Api'
 
-export default function ({ dispatch }: { dispatch: Dispatch }) {
-  return (next: Function) => async (action: DispatchAction) => {
+export default function ({ dispatch }: { dispatch: DispatchActionDynamic }) {
+  return (next: Function) => async (action: Action): Dispatch => {
     // console.log('Middleware')
     // console.log('action')
     // console.log(action.type)
@@ -72,8 +73,8 @@ export default function ({ dispatch }: { dispatch: Dispatch }) {
         }
 
         // Send through all the middlewares again
-        dispatch(newAction)
-        return body.token
+        return dispatch(newAction)
+        // return body.token
       }
 
       if (body.token && action.type !== 'LOG_OUT') {

@@ -91,8 +91,8 @@ export const getTokenFromCookieRes = (cookies: serverCookies): voidString => {
 export const getCookiesFromServerResponse = (ctxHeaders: any): voidStringArray => {
   if (!ctxHeaders) return undefined
 
-  const resCookies = ctxHeaders['set-cookie']
-  return resCookies
+  // const resCookies = ctxHeaders['set-cookie']
+  return ctxHeaders['set-cookie']
 }
 
 /**
@@ -190,21 +190,6 @@ export const getUserFromJWT = (token: string | void): UserFiltered | void => {
   }
 
   const tokenDecoded: User = jwtDecode(token)
-
-  // // Would want to allow metaData here
-  // const allowedKeys = ['name', 'email', 'exp', 'sub']
-  //
-  // function keys<T: string> (obj: any): Array<T> {
-  //   return Object.keys(obj)
-  // }
-  //
-  // const foundkeys: string[] = Object.keys(tokenDecoded).filter((key) =>
-  // allowedKeys.includes(key)) const filteredUser: any = foundkeys .reduce((obj: User, key: string
-  // | number) => { return { ...obj, [key]: tokenDecoded[key] } }, {}) const newUser: User =
-  // keys(tokenDecoded) .filter((key) => allowedKeys.includes(key)) .reduce((obj, key) => { return
-  // { ...obj, [key]: tokenDecoded[key] } }, {}) const newUser: User = Object.keys(tokenDecoded)
-  // .filter((key) => allowedKeys.includes(key)) .reduce((obj, key) => { return { ...obj, [key]:
-  // tokenDecoded[key] } }, {})  return newUser
 
   // return jwtDecode(token)
   return filterUserKeys(tokenDecoded)

@@ -6,13 +6,8 @@ export type Action = {
   type: string,
   payload?: Promise<any> | any,
   error?: boolean,
-  user?: any
-}
-
-export type ThunkAction = {
-  dispatch: Dispatch<Action>,
-  getState: () => any,
-  extraArgument: (any) => any;
+  user?: any,
+  token?: string
 }
 
 export type DispatchAction = Dispatch<Action>
@@ -20,34 +15,34 @@ export type DispatchAction = Dispatch<Action>
 export type ReduxForm = {
   anyTouched: boolean,
   array: any,
-  asyncValidate: Function,
+  asyncValidate: any,
   asyncValidating: boolean,
-  autofill: Function,
-  blur: Function,
-  change: Function,
-  clearAsyncError: Function,
-  clearSubmit: Function,
-  clearSubmitErrors: Function,
-  destroy: Function,
+  autofill: any,
+  blur: any,
+  change: any,
+  clearAsyncError: any,
+  clearSubmit: any,
+  clearSubmitErrors: any,
+  destroy: any,
   error: any,
   errorMessage: string,
   form: string,
-  handleSubmit: Function,
+  handleSubmit: any,
   initialValues: any,
   initialized: boolean,
   invalid: boolean,
   pristine: boolean,
   pure: boolean,
-  reset: Function,
-  submit: Function,
+  reset: any,
+  submit: any,
   submitFailed: boolean,
   submitSucceeded: boolean,
   submitting: boolean,
-  touch: Function,
+  touch: any,
   triggerSubmit: any,
-  untouch: Function,
+  untouch: any,
   valid: boolean,
-  validate: Function,
+  validate: any,
   warning: any
 }
 

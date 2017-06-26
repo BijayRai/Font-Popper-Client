@@ -8,11 +8,16 @@ import renderField from '../inputs/renderField'
 import { resetPassword, saveUserToRedux } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import Router from 'next/router'
-import type { ReduxForm } from '../../flowTypes/redux'
+import type { saveUserFunc, resetPasswordFunc } from '../../flowTypes/Actions'
 
-type Actions = {
-  resetPassword: Function,
-  saveUser: Function,
+type Props = {
+  resetPassword: resetPasswordFunc,
+  saveUser: saveUserFunc,
+  token: string,
+  anyTouched: boolean,
+  errorMessage: string,
+  handleSubmit: any,
+  valid: boolean
 }
 
 type ValidationProps = {
@@ -20,25 +25,19 @@ type ValidationProps = {
   passwordConfirm: string
 }
 
-type Props = {
-  token: string
-} & Actions & ReduxForm
-
 class PwResetFormComponent extends React.Component {
   props: Props
   handleFormSubmit: Function
 
   constructor (props) {
-    console.log('props', props)
-
     super(props)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
   }
 
-  async handleFormSubmit ({password}) {
+  async handleFormSubmit ({ password }: { password: string }) {
     const token = this.props.token
     try {
-      await this.props.resetPassword({password, token})
+      await this.props.resetPassword({ password, token })
       Router.push(`/auth/login`, `/login`)
       toastr.success('Success:', ' Password Updated!')
     } catch (e) {
@@ -48,7 +47,7 @@ class PwResetFormComponent extends React.Component {
 
   render () {
     // handleSubmit is a function given to us from Redux-form
-    const {handleSubmit, errorMessage, valid, anyTouched} = this.props
+    const { handleSubmit, errorMessage, valid, anyTouched } = this.props
 
     const loginErrorText = () => {
       if (errorMessage) {
@@ -110,7 +109,7 @@ function validate (formProps: ValidationProps): ValidateErrors {
 
   return errors
 }
-const PwResetForm = reduxForm({form: 'pwResetForm', validate})(
+const PwResetForm = reduxForm({ form: 'pwResetForm', validate })(
   PwResetFormComponent
 )
 

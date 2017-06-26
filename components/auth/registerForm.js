@@ -4,45 +4,36 @@ import { Field as ReduxField, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import renderField from '../inputs/renderField'
-import { authenticateUser, saveUserToRedux } from '../../actions/authActions'
+import { authenticateUser } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import Router from 'next/router'
-import type { ReduxForm } from '../../flowTypes/redux'
+import type { RegisterUserProps } from '../../flowTypes/Forms'
 import type { Dispatch } from 'redux'
+
 type Actions = {
-  authenticateUser: Function,
-  saveUserToRedux: Function,
+  authenticateUser: (formProps: RegisterUserProps) => Dispatch,
+  errorMessage: string,
+  handleSubmit: any,
+  valid: boolean
 }
 
-type RegisterProps = {
-  email: string,
-  name: string,
-  password: string,
-  passwordConfirm: string
-}
-
-type Props = Actions & ReduxForm
+type Props = Actions
 
 class RegisterComponent extends Component {
-  handleFormSubmit: Function
+  handleFormSubmit: () => any
   props: Props
 
   constructor (props: Props) {
     super(props)
-
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
   }
 
-  async handleFormSubmit (formProps: RegisterProps) {
-    // call action creator to sign up the user on the server
+  async handleFormSubmit (formProps: RegisterUserProps) {
     try {
       await this.props.authenticateUser(formProps)
       toastr.success('Success:', 'User: created!')
       Router.push(`/auth/confirmRegistration`, `/confirm`)
     } catch (e) {
-      console.log('handle error in register form')
-      console.log(e)
-
       if (Array.isArray(e)) {
         e.forEach(err => {
           toastr.error('Error:', err.msg)
@@ -54,7 +45,7 @@ class RegisterComponent extends Component {
   }
 
   render () {
-    const {handleSubmit, valid, errorMessage} = this.props
+    const { handleSubmit, valid, errorMessage } = this.props
     const loginErrorText = () => {
       if (errorMessage) {
         return (
@@ -70,7 +61,7 @@ class RegisterComponent extends Component {
     return (
       <form className='form' onSubmit={handleSubmit(this.handleFormSubmit)}>
         <h2>Sign Up</h2>
-        <ReduxField name='name' type='text' component={renderField} label='Name:'/>
+        <ReduxField name='name' type='text' component={renderField} label='Name:' />
         <ReduxField
           name='email'
           type='email'
@@ -106,7 +97,7 @@ type validateErrors = {
   email?: string,
   passwordConfirm?: string
 }
-function validate (formProps: RegisterProps): validateErrors {
+function validate (formProps: RegisterUserProps): validateErrors {
   let errors = {}
 
   const requiredFields = ['email', 'password', 'passwordConfirm']
@@ -139,8 +130,7 @@ const RegisterForm = reduxForm({
 
 const mapDispatchToProps = (dispatch: Dispatch): mixed => {
   return {
-    authenticateUser: bindActionCreators(authenticateUser, dispatch),
-    saveUserToRedux: bindActionCreators(saveUserToRedux, dispatch)
+    authenticateUser: bindActionCreators(authenticateUser, dispatch)
   }
 }
 

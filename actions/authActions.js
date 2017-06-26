@@ -5,7 +5,7 @@ import type { Dispatch } from 'redux'
 // import type { Action, DispatchAction } from '../flowTypes/redux'
 import type { AuthAction, DispatchAction } from '../flowTypes/Actions'
 import type { User, UserFiltered } from '../flowTypes/User'
-
+import type { RegisterUserProps } from '../flowTypes/Forms'
 export const signinUser = (user: UserFiltered) => async (dispatch: DispatchAction): Dispatch => {
   dispatch({ type: 'USER_LOG_IN' })
   const request: Promise<any> = authApi.signInUser(user)
@@ -31,8 +31,8 @@ export const saveUserToRedux = (user: UserFiltered) => (dispatch: DispatchAction
     user
   })
 
-export const authenticateUser = (user: User) => async (dispatch: DispatchAction): Dispatch => {
-  const response: Promise<any> = authApi.registerUser(user)
+export const authenticateUser = (formProps: RegisterUserProps) => async (dispatch: DispatchAction): Dispatch => {
+  const response: Promise<any> = authApi.registerUser(formProps)
 
   return dispatch({
     type: 'CREATE_USER',
@@ -56,7 +56,7 @@ export const loadAccountForm = (user: User): AuthAction => {
   }
 }
 
-export const updateUser = (user: User) => (dispatch: DispatchAction): Dispatch => {
+export const updateUser = (user: UserFiltered) => (dispatch: DispatchAction): Dispatch => {
   const request: Promise<any> = authApi.updateUser(user)
 
   return dispatch({
@@ -65,8 +65,8 @@ export const updateUser = (user: User) => (dispatch: DispatchAction): Dispatch =
   })
 }
 
-export const forgotUser = (email: string) => (dispatch: DispatchAction): Dispatch => {
-  const request: Promise<any> = authApi.forgotUser(email)
+export const forgotUser = (formData: { email: string }) => (dispatch: DispatchAction): Dispatch => {
+  const request: Promise<any> = authApi.forgotUser(formData)
 
   return dispatch({
     type: 'FORGOT_USER',
@@ -74,7 +74,7 @@ export const forgotUser = (email: string) => (dispatch: DispatchAction): Dispatc
   })
 }
 
-export const resetPassword = (passwordToken: string) => (dispatch: DispatchAction): Dispatch => {
+export const resetPassword = (passwordToken: { password: string, token: string }) => (dispatch: DispatchAction): Dispatch => {
   const request = authApi.resetPassword(passwordToken)
 
   return dispatch({
