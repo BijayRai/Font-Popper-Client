@@ -1,8 +1,13 @@
 // @flow
 
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 import { combineReducers } from 'redux'
-import type { Paginator, PaginatorAction, PaginationState, PaginatorRequestAction } from '../flowTypes/Pagination'
+import type {
+  Paginator,
+  PaginatorAction,
+  PaginationState,
+  PaginatorRequestAction
+} from '../flowTypes/Pagination'
 
 export const createPaginator = (endpoint: string, resultKey: string): Paginator => {
   // action

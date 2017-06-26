@@ -5,14 +5,14 @@ import {
   handleMiddlewareError,
   handleStatusCheck
 } from '../utils/errorHandlers'
-import actionTypes from '../actions/actionTypes'
+import { actionTypes } from '../actions/actionTypes'
 
 import type { Dispatch } from 'redux'
 import type { Action, DispatchAction } from '../flowTypes/redux'
-import type { User, UserFiltered } from '../flowTypes/User'
+import type { UserFiltered } from '../flowTypes/User'
 import type { Response, ResponseBody } from '../flowTypes/Api'
 
-export default function ({dispatch}: { dispatch: Dispatch }) {
+export default function ({ dispatch }: { dispatch: Dispatch }) {
   return (next: Function) => async (action: DispatchAction) => {
     // console.log('Middleware')
     // console.log('action')
@@ -32,13 +32,17 @@ export default function ({dispatch}: { dispatch: Dispatch }) {
     try {
       const response: Response = await action.payload
 
-      // DEBUG
+      // DEBUG Helpers
       // console.log('es6 await promise in middleware')
       // console.log(JSON.stringify(response, null, 2))
       // console.log(response.status)
       // console.log(response.statusText)
       // console.log(response.headers)
 
+      /*
+       Handel All status checks from incoming API Requests
+       If nothing throws an error it will continue as normal
+       */
       await handleStatusCheck(response, dispatch, action.type)
 
       const body: ResponseBody = await response.json()
@@ -48,24 +52,17 @@ export default function ({dispatch}: { dispatch: Dispatch }) {
       // console.log('action type')
       // console.log(action.type)
 
-      if (body.token && action.type === 'LOG_USER_IN') {
-        // Currently this action has no reducer
-        const newAction: Action = {
+      if (body.token && action.type === actionTypes.USER_LOG_IN_SUCCESS) {
+        const user: UserFiltered | void = getUserFromJWT(action.token)
+
+        if (user) {
+          user.hearts = body.hearts // meta data example
+        }
+
+        return dispatch({
           type: action.type,
-          data: {
-            token: body.token,
-            hearts: body.hearts
-          }
-        }
-
-        // Send through all the middlewares again
-        dispatch(newAction)
-
-        // MODIFY CREATE TO DO THE SAME THING WITH HEARTS
-        return {
-          token: body.token,
-          hearts: body.hearts
-        }
+          user
+        })
       }
 
       if (body.token && action.type === 'CREATE_USER') {
@@ -87,7 +84,7 @@ export default function ({dispatch}: { dispatch: Dispatch }) {
 
         dispatch({
           type: actionTypes.REFRESH_TOKEN,
-          user: {...decodedUser}
+          user: { ...decodedUser }
         })
       }
 

@@ -2,10 +2,10 @@
 
 import fetch from 'isomorphic-unfetch'
 import { envConfig as env } from '../config/envConfigServer'
-import type { User } from '../flowTypes/User'
+import type { User, UserFiltered } from '../flowTypes/User'
 
 class authApi {
-  static async signInUser (user: User): Promise<any> {
+  static async signInUser (user: UserFiltered): Promise<any> {
     const url = `${env.BACKEND_URL}/api/signin`
     return fetch(url, {
       method: 'POST',

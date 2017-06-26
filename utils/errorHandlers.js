@@ -1,7 +1,6 @@
 // @flow
 
 import { toastr } from 'react-redux-toastr'
-import Router from 'next/router'
 import { logUserOut } from '../actions/authActions'
 import type { Dispatch } from 'redux'
 import type { Response, ErrorType } from '../flowTypes/Api'
@@ -13,25 +12,12 @@ import type { Response, ErrorType } from '../flowTypes/Api'
  * - Currently this is in storeAPI.js
  *
  * @param {Object} error
- * @param {Object} dispatch
  */
-  // TODO: CHECK ERRORS AGAIN
-export const handleMiddlewareError = async (error: ErrorType, dispatch: Dispatch) => {
-  console.log('handleError from AuthUtils to be UPDATED and FIXED')
+export const handleMiddlewareError = (error: ErrorType) => {
   console.log(error)
 
-  if (error.logout) {
-    toastr.error('Error:', error.message)
-      // dispatch(logUserOut())
-    console.log(
-        'SHOULD LOG USER OUR, BUT SHOULD HAPPEN WITH MIDDLEWARE NOT ERROR HANDLER'
-      )
-
-    Router.push(`/auth/login`, `/login`)
-  }
-
-    // show middleware error instead of handling error in a component
   if (error.showMid) {
+    // show middleware error instead of handling error in a component
     toastr.error('Error:', error.message)
   }
 }
@@ -48,8 +34,7 @@ export const handleMiddlewareError = async (error: ErrorType, dispatch: Dispatch
  * @returns {Error}
  */
 export const handleStatusCheck = async (response: Response, dispatch: Dispatch, actionType: string) => {
-  console.log('handle Status Check')
-  console.log(response.status)
+  // console.log('handle Status Check', response.status)
 
   const error = {
     showMid: false, // show middleware error instead of handling error in a component
@@ -62,6 +47,7 @@ export const handleStatusCheck = async (response: Response, dispatch: Dispatch, 
     throw error
   }
 
+  // invalid access just log user out automatically
   if (response.status === 401) {
     error.showMid = true
     error.message = 'Please login again'
@@ -69,11 +55,12 @@ export const handleStatusCheck = async (response: Response, dispatch: Dispatch, 
     throw error
   }
 
+  // Bad data type sent to API and rejected( ie Form data was incorrect 'type')
   if (response.status === 422) {
     const newError = await response.json()
 
     /*
-     * The registerform could return an array of errors
+     * The register form could return an array of errors
      * normally it will just return an {error: 'my error msg'}
      */
     if (Array.isArray(newError.errors)) {
@@ -83,6 +70,7 @@ export const handleStatusCheck = async (response: Response, dispatch: Dispatch, 
     }
   }
 
+  // Catch all for anything the didn't meet above requirements
   if (response.status !== 200) {
     error.message = response.statusText
     throw error

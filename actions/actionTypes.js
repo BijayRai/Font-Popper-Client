@@ -1,6 +1,6 @@
 // @flow
 type ActionTypes = { [string]: string }
-const actionTypes: ActionTypes = {
+const actions: ActionTypes = {
   // Moment
   TICK: 'TICK',
 
@@ -10,7 +10,8 @@ const actionTypes: ActionTypes = {
   CREATE_USER: 'CREATE_USER',
   SAVE_USER: 'SAVE_USER',
   LOG_OUT: 'LOG_OUT',
-  LOG_USER_IN: 'LOG_USER_IN',
+  USER_LOG_IN: 'USER_LOG_IN',
+  USER_LOG_IN_SUCCESS: 'USER_LOG_IN_SUCCESS',
   FORGOT_USER: 'FORGOT_USER',
   RESET_PASSWORD: 'RESET_PASSWORD',
 
@@ -22,5 +23,5 @@ const actionTypes: ActionTypes = {
   REQUEST_PAGE: 'REQUEST_PAGE',
   RECEIVE_PAGE: 'RECEIVE_PAGE'
 }
-
-export default actionTypes
+exports.actionTypes = actions
+// export default actionTypes
