@@ -23,7 +23,7 @@ const getLinks = (isAuthenticated: boolean, nav: Nav) => {
         <li key={link.slug} className='nav__item'>
           <Link prefetch href={link.slug}>
             <a className='nav__link'>
-              {renderSvg(String(link.icon))}
+              {renderSvg(link.icon)}
               <span>{link.title}</span>
             </a>
           </Link>
@@ -43,7 +43,7 @@ export default connect(state => state)(({url, user}: Props) => {
           <li className='nav__item'>
             <Link prefetch href='/'>
               <a className='nav__link nav__link--logo'>
-                {renderSvg(String(nav.LOGO))}
+                {renderSvg(nav.LOGO)}
               </a>
             </Link>
           </li>

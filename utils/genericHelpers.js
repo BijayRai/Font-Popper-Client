@@ -2,6 +2,7 @@
 import React from 'react'
 // import _ from 'lodash'
 import FormData from 'form-data'
+import type { Svg } from '../flowTypes/Components'
 type ReduxForm = {
   name: string,
   photo?: any,
@@ -39,11 +40,10 @@ export const convertToFormData = (reduxForm: ReduxForm) => {
 
   return formData
 }
-
 /**
  * renderSvg(svg)
  * - Component Helper to render and svg item
  *
  * @param {Object} Svg - from importing an svg into react
  */
-export const renderSvg = (Svg: string): React.Element<*> => <Svg />
+export const renderSvg = (Svg: Svg): React.Element<*> => <Svg />
