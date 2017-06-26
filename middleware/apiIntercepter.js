@@ -54,11 +54,11 @@ export default function ({ dispatch }: { dispatch: DispatchActionDynamic }) {
       // console.log(action.type)
 
       if (body.token && action.type === actionTypes.USER_LOG_IN_SUCCESS) {
-        const user: UserFiltered | void = getUserFromJWT(action.token)
+        const user: UserFiltered | void = getUserFromJWT(body.token)
 
-        if (user) {
-          user.hearts = body.hearts // meta data example
-        }
+        // if (user) {
+        //   user.hearts = body.hearts // meta data example
+        // }
 
         return dispatch({
           type: action.type,
