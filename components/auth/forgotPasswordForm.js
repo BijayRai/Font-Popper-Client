@@ -22,12 +22,12 @@ type Props = {
   valid: boolean
 }
 
-class ForgotPasswordComponent extends React.Component {
+export class ForgotPasswordComponent extends React.Component {
   props: Props
   handleFormSubmit: Function
 
-  constructor (props, context) {
-    super(props, context)
+  constructor (props: Props) {
+    super(props)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
   }
 
@@ -78,7 +78,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const ForgotPasswordForm = reduxForm({ form: 'forgotPasswordForm' })(
+export const ForgotPasswordForm = reduxForm({ form: 'forgotPasswordForm' })(
   ForgotPasswordComponent
 )
 export default connect(null, mapDispatchToProps)(ForgotPasswordForm)

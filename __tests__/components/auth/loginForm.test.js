@@ -12,7 +12,7 @@ import sinon from 'sinon'
 const expect = require('expect')
 const colors = require('colors')
 
-describe('Login Page', () => {
+describe('Login Form', () => {
   it('Should show email and pw input', () => {
     const props = {
       handleSubmit: () => {}
