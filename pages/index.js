@@ -58,18 +58,19 @@ const Div = styled.div`
 
 const pageTitle: string = 'New App'
 
-class HomePage extends React.Component<void, {}, void> {
+export class HomePage extends React.Component<void, {}, void> {
   render () {
     return (
       <div className='inner'>
         <Div>
-          <Title>New App Template</Title>
+          <Title className='title'>New App Template</Title>
         </Div>
       </div>
     )
   }
 }
 
+// export default HomePage
 export default withRedux(initStore)(
   standardLayout(HomePage, pageTitle)
 )

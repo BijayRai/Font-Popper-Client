@@ -43,21 +43,10 @@ class ForgotPasswordComponent extends React.Component {
 
   render () {
     // handleSubmit is a function given to us from Redux-form
-    const { handleSubmit, errorMessage, valid } = this.props
-    const loginErrorText = () => {
-      if (errorMessage) {
-        return (
-          <div className='bs-callout bs-callout-danger'>
-            <h4>
-              {errorMessage}
-            </h4>
-          </div>
-        )
-      }
-    }
+    const { handleSubmit, valid } = this.props
 
     return (
-      <form className='form' onSubmit={handleSubmit(this.handleFormSubmit)}>
+      <form className='form forgotPasswordForm' onSubmit={handleSubmit(this.handleFormSubmit)}>
         <h2>I forgot my password</h2>
         <label>Email:</label>
         <ReduxField

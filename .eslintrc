@@ -5,6 +5,7 @@
     "node": true,
     "es6": true,
     "jest": true,
+    "mocha": true,
     "jquery": true
   },
   "parserOptions": {

@@ -6,6 +6,7 @@ import type { Dispatch } from 'redux'
 import type { AuthAction, DispatchAction } from '../flowTypes/Actions'
 import type { User, UserFiltered } from '../flowTypes/User'
 import type { RegisterUserProps } from '../flowTypes/Forms'
+
 export const signinUser = (user: UserFiltered) => async (dispatch: DispatchAction): Dispatch => {
   dispatch({ type: 'USER_LOG_IN' })
   const request: Promise<any> = authApi.signInUser(user)

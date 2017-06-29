@@ -16,6 +16,7 @@ import {
 
 import type { Ctx } from '../flowTypes/Api'
 import type { State } from '../flowTypes/redux'
+
 type FunctionComponent<P> = (props: P) => ?React.Element<*>;
 type ClassComponent<D, P, S> = Class<React.Component<D, P, S>>
 type Component<D, P> = FunctionComponent<P> | ClassComponent<D, P, any>
@@ -36,7 +37,7 @@ export default <D: any, P: any> (Page: Component<D, P>, title: string = '') => {
         ctx.store,
         getUserFromJWT(findTokenToDecode(ctx.res._headers, ctx.req)),
         findCookies(ctx.res._headers, ctx.req)
-      )
+        )
 
       let pageProps
       if (typeof Page.getInitialProps === 'function') {

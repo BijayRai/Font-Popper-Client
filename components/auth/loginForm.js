@@ -4,19 +4,19 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Field as ReduxField, reduxForm } from 'redux-form'
-import {
-  signinUser
-} from '../../actions/authActions'
+import { signinUser } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import Router from 'next/router'
 import type { User } from '../../flowTypes/User'
 import type { signinUserFunc } from '../../flowTypes/Actions'
+import type { ReduxForm } from '../../flowTypes/redux'
 
 type Props = {
   signinUser: signinUserFunc,
-  errorMessage: string,
-  handleSubmit: any,
-  valid: boolean
+  ...ReduxForm
+  // errorMessage: string,
+  // handleSubmit: any,
+  // valid: boolean
 }
 
 type formProps = {
@@ -24,18 +24,18 @@ type formProps = {
   password: string,
 }
 
-class LoginFormComponent extends React.Component {
+export class LoginFormComponent extends React.Component <void, Props, void> {
   props: Props
-  handleFormSubmit: Function
+  handleFormSubmit: (form: formProps) => void
 
-  constructor (props, context) {
-    super(props, context)
+  constructor (props: Props) {
+    super(props)
+
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
   }
 
   async handleFormSubmit ({ email, password }: formProps) {
     try {
-      // const user: { token: string } = await this.props.signinUser({email, password})
       const { user }: { user: User } = await this.props.signinUser({ email, password })
 
       if (user) {
@@ -63,7 +63,7 @@ class LoginFormComponent extends React.Component {
     }
 
     return (
-      <form className='form' onSubmit={handleSubmit(this.handleFormSubmit)}>
+      <form className='form loginForm' onSubmit={handleSubmit(this.handleFormSubmit)}>
         <h2>Login</h2>
         <label>Email:</label>
         <ReduxField
@@ -103,5 +103,5 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const LoginForm = reduxForm({ form: 'loginForm' })(LoginFormComponent)
+export const LoginForm = reduxForm({ form: 'loginForm' })(LoginFormComponent)
 export default connect(null, mapDispatchToProps)(LoginForm)

@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react'
+import React from 'react'
 import { initStore } from '../../store'
 import withRedux from 'next-redux-wrapper'
 import standardLayout from '../../hocs/standardLayout'
@@ -17,11 +17,11 @@ type Props = {
 }
 const pageTitle: string = 'Login'
 
-export class LogInPage extends Component<void, Props, void> {
+export class LogInPage extends React.Component<void, Props, void> {
   props: Props
 
-  static async getInitialProps ({store, res, query}: Ctx) {
-    return {query}
+  static async getInitialProps ({ store, res, query }: Ctx) {
+    return { query }
   }
 
   componentDidMount () {
@@ -32,7 +32,7 @@ export class LogInPage extends Component<void, Props, void> {
 
   render () {
     return (
-      <div className='inner' style={{paddingTop: 30}}>
+      <div className='inner' style={{ paddingTop: 30 }}>
         <LoginForm />
         <ForgotPasswordForm />
       </div>
@@ -40,4 +40,7 @@ export class LogInPage extends Component<void, Props, void> {
   }
 }
 
-export default withRedux(initStore)(standardLayout(LogInPage, pageTitle))
+// default
+export default withRedux(initStore)(
+  standardLayout(LogInPage, pageTitle)
+)

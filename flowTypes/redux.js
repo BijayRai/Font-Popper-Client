@@ -12,7 +12,7 @@ export type Action = {
 
 export type DispatchAction = Dispatch<Action>
 
-export type ReduxForm = {
+export type ReduxForm = {|
   anyTouched: boolean,
   array: any,
   asyncValidate: any,
@@ -27,10 +27,11 @@ export type ReduxForm = {
   error: any,
   errorMessage: string,
   form: string,
-  handleSubmit: any,
+  handleSubmit: (any) => any,
   initialValues: any,
   initialized: boolean,
   invalid: boolean,
+  onSave: (any) => any,
   pristine: boolean,
   pure: boolean,
   reset: any,
@@ -44,7 +45,7 @@ export type ReduxForm = {
   valid: boolean,
   validate: any,
   warning: any
-}
+|}
 
 export type ReduxFormField = {
   value: string,
