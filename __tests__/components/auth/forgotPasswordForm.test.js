@@ -11,9 +11,7 @@ import { Provider } from 'react-redux'
 import { reducer as formReducer } from 'redux-form'
 import { createStore, compose, combineReducers, applyMiddleware, bindActionCreators } from 'redux'
 import sinon from 'sinon'
-
-const expect = require('expect')
-const colors = require('colors')
+import expect from 'expect'
 
 describe('Forgot Password Form', () => {
   it('Should show email input', () => {

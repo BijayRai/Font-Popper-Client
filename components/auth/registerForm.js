@@ -19,7 +19,7 @@ type Actions = {
 
 type Props = Actions
 
-class RegisterComponent extends Component {
+export class RegisterComponent extends Component {
   handleFormSubmit: () => any
   props: Props
 
@@ -61,14 +61,18 @@ class RegisterComponent extends Component {
     return (
       <form className='form' onSubmit={handleSubmit(this.handleFormSubmit)}>
         <h2>Sign Up</h2>
-        <ReduxField name='name' type='text' component={renderField} label='Name:' />
         <ReduxField
+          className='form-control'
+          name='name' type='text' component={renderField} label='Name:' />
+        <ReduxField
+          className='form-control'
           name='email'
           type='email'
           component={renderField}
           label='Email:'
         />
         <ReduxField
+          className='form-control inputPw'
           name='password'
           type='password'
           component={renderField}
@@ -76,6 +80,7 @@ class RegisterComponent extends Component {
         />
         {/* {password.error} */}
         <ReduxField
+          className='form-control inputPwConfirm'
           name='passwordConfirm'
           type='password'
           component={renderField}
@@ -97,6 +102,7 @@ type validateErrors = {
   email?: string,
   passwordConfirm?: string
 }
+
 function validate (formProps: RegisterUserProps): validateErrors {
   let errors = {}
 
@@ -123,7 +129,7 @@ function validate (formProps: RegisterUserProps): validateErrors {
   return errors
 }
 
-const RegisterForm = reduxForm({
+export const RegisterForm = reduxForm({
   form: 'register',
   validate
 })(RegisterComponent)
