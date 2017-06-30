@@ -4,13 +4,7 @@
 import React from 'react'
 import HomePage from '../pages/index'
 import { shallow, mount } from 'enzyme'
-import renderer from 'react-test-renderer'
-
-const TestUtils = require('react-dom/test-utils')
-const expect = require('expect')
-const colors = require('colors')
-
-// console.log('/********************************/'.grey)
+import expect from 'expect'
 
 const setup = () => {
   // renders out the module in memory DOM
