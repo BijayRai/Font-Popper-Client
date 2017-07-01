@@ -1,5 +1,6 @@
 {
   "DEV_URL": "http://localhost:3000/api",
   "PROD_URL": "https://testone.now.sh",
+  "TEST_URL": "http://localhost:3000/test",
   "REFRESH_WINDOW": 15
 }

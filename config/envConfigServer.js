@@ -6,11 +6,19 @@
  localHost:3000/api -> translates to http://localhost:7777 due to http-proxy - so now our original /api/__route__
  will still work in both Dev and Production
  */
-const prod = process.env.NODE_ENV === 'production'
+const prod = process.env.NODE_ENV
 const config = require('./config.json')
+let URL
+if (prod === 'production') {
+  URL = config.PROD_URL
+} else if (prod === 'test') {
+  URL = config.TEST_URL
+} else {
+  URL = config.DEV_URL
+}
 
 const env = {
-  BACKEND_URL: prod ? config.PROD_URL : config.DEV_URL,
+  BACKEND_URL: URL,
   WEBSITE_TITLE: 'Now Thats Delicious!',
   REFRESH_WINDOW: config.REFRESH_WINDOW,
   TAGS: ['Wifi', 'Open Late', 'Family Friendly', 'Vegetarian', 'Licensed']
