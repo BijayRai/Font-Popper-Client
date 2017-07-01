@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Nav login Block should render input snapshot 1`] = `
+<div
+  className="form-group"
+>
+  <label
+    className="control-label"
+  >
+    Name
+  </label>
+  <input
+    className="form-control"
+    name="name"
+    onBlur={[Function]}
+    type="text"
+  />
+</div>
+`;
