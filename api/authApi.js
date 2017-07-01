@@ -23,7 +23,7 @@ class authApi {
   }
 
   static async signOutUser (): Promise<any> {
-    const url = `${env.BACKEND_URL}/api/signout`
+    const url:string = `${env.BACKEND_URL}/api/signout`
     return fetch(url, {
       method: 'GET',
       headers: {
