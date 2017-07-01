@@ -8,7 +8,7 @@ export const renderField = (props: Props) => {
     input,
     label,
     type,
-    meta: {pristine, touched, error, invalid}
+    meta: { pristine, touched, error, invalid }
   } = props
 
   // Track state of inputs:
