@@ -32,7 +32,7 @@ export const checkBox = (props: Props) => {
 
   return (
     <div key={key} className={inputClass}>
-      <input {...input} id={id} value={value} type={type}/>
+      <input {...input} id={id} value={value} type={type} />
       <label htmlFor={name}>{label}</label>
       {!pristine || (touched && invalid && <span>{error}</span>)}
     </div>

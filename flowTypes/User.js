@@ -1,6 +1,6 @@
 // @flow
 
-export type User = {
+export type User = {|
   +isAuthenticated: boolean,
   +sub?: string,
   +name?: string,
@@ -11,7 +11,7 @@ export type User = {
   +csrf?: string,
   +rfs?: string,
   +iat?: string
-}
+|}
 
 export type UserFiltered = {
   isAuthenticated?: boolean,

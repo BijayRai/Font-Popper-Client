@@ -14,9 +14,9 @@ type Props = {
 }
 
 class renderDropzoneInput extends React.Component <void, Props, State> {
-  handleDropRejected: Function
-  handleFileAccepted: Function
-  removeItem: Function
+  handleDropRejected: () => void
+  handleFileAccepted: (accepted: File[]) => void
+  removeItem: () => void
   state: State
 
   constructor (props: Props) {
