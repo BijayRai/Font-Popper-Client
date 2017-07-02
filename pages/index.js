@@ -5,6 +5,8 @@ import { initStore } from '../store'
 import withRedux from 'next-redux-wrapper'
 import styled, { css } from 'styled-components'
 import standardLayout from '../hocs/standardLayout'
+import { bindActionCreators } from 'redux'
+import { getStores } from '../actions/storeActions'
 
 // TODO: move styles into their own directory
 // const rule1 = {
@@ -59,6 +61,12 @@ const Div = styled.div`
 const pageTitle: string = 'New App'
 
 export class HomePage extends React.Component<void, {}, void> {
+  async componentDidMount (): any {
+    console.log('call stores')
+
+    await this.props.getStores()
+  }
+
   render () {
     return (
       <div className='inner'>
@@ -70,7 +78,13 @@ export class HomePage extends React.Component<void, {}, void> {
   }
 }
 
+const dispatchActionsToProps = (dispatch) => {
+  return {
+    getStores: bindActionCreators(getStores, dispatch)
+  }
+}
+
 // export default HomePage
-export default withRedux(initStore)(
+export default withRedux(initStore, null, dispatchActionsToProps)(
   standardLayout(HomePage, pageTitle)
 )

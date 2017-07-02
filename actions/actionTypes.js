@@ -21,7 +21,10 @@ const actions: ActionTypes = {
 
   // PAGINATION
   REQUEST_PAGE: 'REQUEST_PAGE',
-  RECEIVE_PAGE: 'RECEIVE_PAGE'
+  RECEIVE_PAGE: 'RECEIVE_PAGE',
+
+  // Stores
+  LOAD_STORES_SUCCESS: 'LOAD_STORES_SUCCESS'
 }
 exports.actionTypes = actions
 // export default actionTypes

@@ -1,25 +1,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-env jest */
 import React from 'react'
-import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
 import { authReducer } from '../../reducers/authReducer'
-
-const initialState = {
-  time: 0,
-  isSaving: false,
-  user: {
-    isAuthenticated: false
-  },
-  form: {},
-  userAccount: {},
-  pagination: {
-    pages: {}
-  },
-  toaster: {}
-}
+import initialState from '../../reducers/initialState'
 
 describe('authReducer', () => {
+  // Initial state
   it('should return the initial state', () => {
     const reducer = authReducer(initialState, {})
     expect(reducer).toEqual(initialState)
