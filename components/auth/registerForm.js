@@ -4,14 +4,17 @@ import { Field as ReduxField, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import renderField from '../inputs/renderField'
-import { authenticateUser } from '../../actions/authActions'
+import { authenticateUser, saveUserToRedux } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
+import { getUserFromJWT } from '../../utils/authUtils'
 import Router from 'next/router'
 import type { RegisterUserProps } from '../../flowTypes/Forms'
+import type { UserFiltered } from '../../flowTypes/User'
 import type { Dispatch } from 'redux'
 
 type Actions = {
   authenticateUser: (formProps: RegisterUserProps) => Dispatch,
+  saveUserToRedux: (user: UserFiltered | void) => Dispatch,
   errorMessage: string,
   handleSubmit: any,
   valid: boolean
@@ -30,9 +33,16 @@ export class RegisterComponent extends Component {
 
   async handleFormSubmit (formProps: RegisterUserProps) {
     try {
-      await this.props.authenticateUser(formProps)
+      const response = await this.props.authenticateUser(formProps)
+      console.log('response', response)
+
+      const decodedUser: UserFiltered | void = getUserFromJWT(response.data)
+      console.log('decodedUser', decodedUser)
+
+      this.props.saveUserToRedux(decodedUser)
+
       toastr.success('Success:', 'User: created!')
-      Router.push(`/auth/confirmRegistration`, `/confirm`)
+      Router.push(`/hidden`)
     } catch (e) {
       if (Array.isArray(e)) {
         e.forEach(err => {
@@ -136,7 +146,8 @@ export const RegisterForm = reduxForm({
 
 const mapDispatchToProps = (dispatch: Dispatch): mixed => {
   return {
-    authenticateUser: bindActionCreators(authenticateUser, dispatch)
+    authenticateUser: bindActionCreators(authenticateUser, dispatch),
+    saveUserToRedux: bindActionCreators(saveUserToRedux, dispatch)
   }
 }
 

@@ -22,6 +22,8 @@ export const authReducer = (state: User = initialState.user, action: Action): Us
         isAuthenticated: false
       }
     case actionTypes.USER_LOG_IN_SUCCESS:
+      console.log('saved user in redux')
+
       return Object.assign({}, state, {
         ...action.user,
         isAuthenticated: true

@@ -42,7 +42,7 @@ export const authenticateUser = (formProps: RegisterUserProps) => async (dispatc
 }
 
 export const refreshTokenAction = (user: User) => (dispatch: DispatchAction): Dispatch => {
-  const request: Promise<any> = authApi.fetchRefreshTokens(user)
+  const request: Promise<any> = authApi.fetchRefreshTokens()
 
   return dispatch({
     type: 'FETCH_NEW_TOKENS',
