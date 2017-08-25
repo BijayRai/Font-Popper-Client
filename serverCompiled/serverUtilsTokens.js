@@ -29,6 +29,8 @@ var config = require('../config/envConfigServer');
  * @returns {String} cookie string
  */
 exports.extractJWTFromCookieParser = function (cookies) {
+  console.log('Spencer compiled');
+
   // console.log('cookies - extractJWTFromCookieParser')
   // console.log(cookies)
 

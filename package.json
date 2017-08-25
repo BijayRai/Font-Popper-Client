@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-boilerplate",
+  "name": "font-popper-client",
   "version": "1.0.0",
   "scripts": {
     "server": "node server.js",
@@ -8,12 +8,15 @@
     "test:watch": "npm run test -- --watch",
     "dev": "node server.js",
     "dev-babel": "babel-node server.js",
-    "watch-helpers": "babel ./serverMiddleware --watch --out-dir ./serverCompiled",
+    "watch-helpers": "NODE_ENV=server babel ./serverMiddleware --watch --out-dir ./serverCompiled",
     "build": "next build",
     "watch": "nodemon server.js -w server.js",
     "start": "NODE_ENV=production node server.js",
     "lint": "standard --verbose",
     "flow": "flow"
+  },
+  "now": {
+    "alias": "client-fontpopper.now.sh"
   },
   "standard": {
     "parser": "babel-eslint",

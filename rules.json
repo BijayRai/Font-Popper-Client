@@ -2,10 +2,10 @@
   "rules": [
     {
       "pathname": "/api/**",
-      "dest": "api-testone.now.sh"
+      "dest": "api-fontpopper.now.sh"
     },
     {
-      "dest": "frontend-testone.now.sh"
+      "dest": "client-fontpopper.now.sh"
     }
   ]
 }

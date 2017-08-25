@@ -26,7 +26,7 @@ export class LogInPage extends React.Component<void, Props, void> {
 
   componentDidMount () {
     if (this.props.query.error) {
-      toastr.error('Error:', 'Password reset is invalid or has expired')
+      toastr.error('Error:', 'Password reset is invalid or has expired.')
     }
   }
 

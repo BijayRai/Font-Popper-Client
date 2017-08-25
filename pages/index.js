@@ -64,14 +64,14 @@ export class HomePage extends React.Component<void, {}, void> {
   async componentDidMount (): any {
     console.log('call stores')
 
-    await this.props.getStores()
+    // await this.props.getStores()
   }
 
   render () {
     return (
       <div className='inner'>
         <Div>
-          <Title className='title'>New App Template</Title>
+          <Title className='title'>New App Template with auto Alias</Title>
         </Div>
       </div>
     )

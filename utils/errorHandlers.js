@@ -14,7 +14,13 @@ import type { Response, ErrorType } from '../flowTypes/Api'
  * @param {Object} error
  */
 export const handleMiddlewareError = (error: ErrorType) => {
-  console.log(error)
+  console.log('handleMiddlewareError', error)
+
+  if (error.showMid && Array.isArray(error.message)) {
+    return error.message.forEach(err => {
+      toastr.error('Error:', err.msg)
+    })
+  }
 
   if (error.showMid) {
     // show middleware error instead of handling error in a component
@@ -34,6 +40,9 @@ export const handleMiddlewareError = (error: ErrorType) => {
  * @returns {Error}
  */
 export const handleStatusCheck = async (response: Response, dispatch: Dispatch, actionType: string) => {
+  /*
+  Unless there is a super special case - have this handle the error output, meaning dont have the component deal with the errors.
+   */
   // console.log('handle Status Check', response.status)
 
   const error = {
@@ -58,21 +67,26 @@ export const handleStatusCheck = async (response: Response, dispatch: Dispatch, 
   // Bad data type sent to API and rejected( ie Form data was incorrect 'type')
   if (response.status === 422) {
     const newError = await response.json()
-
+    error.showMid = true
     /*
      * The register form could return an array of errors
      * normally it will just return an {error: 'my error msg'}
      */
     if (Array.isArray(newError.errors)) {
-      throw newError.errors
+      error.message = newError.errors
+      throw error
     } else {
-      throw newError.error
+      error.message = newError.error
+      throw error
     }
   }
 
   // Catch all for anything the didn't meet above requirements
+  // IE 500 status
   if (response.status !== 200) {
-    error.message = response.statusText
+    const newError = await response.json()
+    error.showMid = true
+    error.message = newError.error
     throw error
   }
 }

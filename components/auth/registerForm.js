@@ -8,7 +8,7 @@ import { authenticateUser, saveUserToRedux } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import { getUserFromJWT } from '../../utils/authUtils'
 import Router from 'next/router'
-import type { RegisterUserProps } from '../../flowTypes/Forms'
+import type { RegisterUserProps, MiddleWareResponse } from '../../flowTypes/Forms'
 import type { UserFiltered } from '../../flowTypes/User'
 import type { Dispatch } from 'redux'
 
@@ -31,27 +31,23 @@ export class RegisterComponent extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
   }
 
-  async handleFormSubmit (formProps: RegisterUserProps) {
-    try {
-      const response = await this.props.authenticateUser(formProps)
-      console.log('response', response)
-
-      const decodedUser: UserFiltered | void = getUserFromJWT(response.data)
-      console.log('decodedUser', decodedUser)
-
-      this.props.saveUserToRedux(decodedUser)
-
-      toastr.success('Success:', 'User: created!')
-      Router.push(`/hidden`)
-    } catch (e) {
-      if (Array.isArray(e)) {
-        e.forEach(err => {
-          toastr.error('Error:', err.msg)
-        })
-      } else {
-        toastr.error('Error:', e)
-      }
+  logUserIn (response: MiddleWareResponse) {
+    /*
+    Use if statement or try catch....
+    */
+    if (!response) {
+      return
     }
+
+    const decodedUser: UserFiltered | void = getUserFromJWT(response.data)
+    this.props.saveUserToRedux(decodedUser)
+    toastr.success('Success:', 'User: created!')
+    Router.push(`/hidden`)
+  }
+
+  async handleFormSubmit (formProps: RegisterUserProps) {
+    const response: MiddleWareResponse = await this.props.authenticateUser(formProps)
+    this.logUserIn(response)
   }
 
   render () {

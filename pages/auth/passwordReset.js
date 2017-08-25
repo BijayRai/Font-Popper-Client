@@ -26,7 +26,7 @@ class PasswordReset extends React.Component<void, Props, void> {
   render () {
     return (
       <div className='inner' style={{paddingTop: 30}}>
-        <PasswordResetForm token={this.props.query.token}/>
+        <PasswordResetForm token={this.props.query.token} />
       </div>
     )
   }

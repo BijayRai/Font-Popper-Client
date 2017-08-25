@@ -16,36 +16,6 @@ exports.routes = (expressServer, app, handle) => {
   //   return app.render(req, res, '/hidden', req.query)
   // })
 
-  expressServer.get('/account/confirm/:token*?', async (req, res) => {
-    const validationToken = req.params.token
-
-    req.query = {
-      token: validationToken
-    }
-
-    if (!validationToken) {
-      return res.redirect('/register')
-    }
-
-    // Confirm check should validate token, remove validation objects in DB, and change valid to
-    // TRUE
-    const response = await tokenUtils.confirmCheck(validationToken)
-
-    if (response.status === 422) {
-      const query = queryString.stringify({
-        error: true
-      })
-      return res.redirect('/register?' + query)
-    }
-
-    if (Array.isArray(response)) {
-      response.map(token => res.append('Set-Cookie', token))
-      return res.redirect('/hidden')
-    }
-
-    return res.redirect('/register')
-  })
-
   expressServer.get('/account/reset/:token*?', async (req, res) => {
     const resetToken = req.params.token
 
@@ -74,8 +44,38 @@ exports.routes = (expressServer, app, handle) => {
     return app.render(req, res, '/auth/account', req.query)
   })
 
+  // USED FOR EMAIL CONFIRMATION
   expressServer.get('/confirm', (req, res) => {
     return app.render(req, res, '/auth/confirmRegistration', req.query)
+  })
+  expressServer.get('/account/confirm/:token*?', async (req, res) => {
+    const validationToken = req.params.token
+
+    req.query = {
+      token: validationToken
+    }
+
+    if (!validationToken) {
+      return res.redirect('/register')
+    }
+
+    // Confirm check should validate token, remove validation objects in DB, and change valid to
+    // TRUE
+    const response = await tokenUtils.confirmCheck(validationToken)
+
+    if (response.status === 422) {
+      const query = queryString.stringify({
+        error: true
+      })
+      return res.redirect('/register?' + query)
+    }
+
+    if (Array.isArray(response)) {
+      response.map(token => res.append('Set-Cookie', token))
+      return res.redirect('/hidden')
+    }
+
+    return res.redirect('/register')
   })
 
   // NEXT ROUTE EXAMPLE BELOW

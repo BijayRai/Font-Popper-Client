@@ -5,3 +5,6 @@ export type RegisterUserProps = {
   password: string,
   passwordConfirm: string
 }
+
+export type MiddleWareResponse = { type: string, data: string } | null
+export type MessageResponse = { message: string } | null

@@ -101,9 +101,12 @@ export default function ({ dispatch }: { dispatch: DispatchActionDynamic }) {
       dispatch(newAction)
       return body.data
     } catch (e) {
+      /*
+        Throw error here so we can safely catch the error in the component
+       */
       console.log('middleware error')
-      handleMiddlewareError(e, dispatch)
-      throw e
+      handleMiddlewareError(e)
+      // throw e
     }
   }
 }

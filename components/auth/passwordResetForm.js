@@ -9,6 +9,7 @@ import { resetPassword, saveUserToRedux } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import Router from 'next/router'
 import type { saveUserFunc, resetPasswordFunc } from '../../flowTypes/Actions'
+import type { MessageResponse } from '../../flowTypes/Forms'
 
 type Props = {
   resetPassword: resetPasswordFunc,
@@ -36,13 +37,13 @@ class PwResetFormComponent extends React.Component {
 
   async handleFormSubmit ({ password }: { password: string }) {
     const token = this.props.token
-    try {
-      await this.props.resetPassword({ password, token })
-      Router.push(`/auth/login`, `/login`)
+    const response: MessageResponse = await this.props.resetPassword({ password, token })
+
+    if (response) {
       toastr.success('Success:', ' Password Updated!')
-    } catch (e) {
-      toastr.error('Error:', e.message)
     }
+
+    Router.push(`/auth/login`, `/login`)
   }
 
   render () {
@@ -109,6 +110,7 @@ function validate (formProps: ValidationProps): ValidateErrors {
 
   return errors
 }
+
 const PwResetForm = reduxForm({ form: 'pwResetForm', validate })(
   PwResetFormComponent
 )

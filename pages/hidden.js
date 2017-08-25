@@ -5,22 +5,24 @@ import withRedux from 'next-redux-wrapper'
 import secureLayout from '../hocs/secureLayout'
 import type { User } from '../flowTypes/User'
 import type { State } from '../flowTypes/redux'
-const pageTitle = 'Favs'
+
+const pageTitle: string = 'Moment JS Check'
 
 type Props = {
   user: User
 }
+
 class HiddenPage extends React.Component<void, Props, void> {
   static async getInitialProps (ctx) {
     return {}
   }
 
   render () {
-    const {user} = this.props
+    const { user } = this.props
     return (
       <div>
         <h2 className='inner'>User Logged In</h2>
-        <pre> { JSON.stringify(user) }</pre>
+        <pre> {JSON.stringify(user)}</pre>
       </div>
     )
   }

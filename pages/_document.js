@@ -10,6 +10,9 @@ class MyDocument extends Document {
     const main = sheet.collectStyles(<Main />)
     const styleTags = sheet.getStyleElement()
 
+    // Consider copying and pasting global stylesheets into jsx? Check the wiki when ready
+    // https://github.com/zeit/next.js/wiki/Global-styles-and-layouts
+    // <style jsx global>{``}</style>
     return (
       <html>
         <Head>

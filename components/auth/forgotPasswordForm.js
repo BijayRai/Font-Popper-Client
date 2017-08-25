@@ -9,6 +9,7 @@ import {
 } from '../../actions/authActions'
 import { toastr } from 'react-redux-toastr'
 import type { forgotUserFunc } from '../../flowTypes/Actions'
+import type { MessageResponse } from '../../flowTypes/Forms'
 
 type formProps = {
   email: string,
@@ -32,12 +33,13 @@ export class ForgotPasswordComponent extends React.Component {
   }
 
   async handleFormSubmit ({ email }: formProps) {
-    try {
-      const response = await this.props.forgotUser({ email })
+    // Object is sent using Data so middleware returns just the body of the response back to us
+    // if there is a matching reducer - it will do something based on the type
+    const response: MessageResponse = await this.props.forgotUser({ email })
+
+    if (response) {
       this.props.reset()
       toastr.success('Success:', response.message)
-    } catch (e) {
-      toastr.error('Error:', e)
     }
   }
 

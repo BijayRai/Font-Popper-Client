@@ -6,7 +6,7 @@
     "production": {
       "presets": "next/babel"
     },
-    "test": {
+    "server": {
       "presets": [
         [
           "env",

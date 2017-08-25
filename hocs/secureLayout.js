@@ -16,7 +16,6 @@ import type { Ctx } from '../flowTypes/Api'
 type FunctionComponent<P> = (props: P) => ?React.Element<*>;
 type Component<D, P> = FunctionComponent<P> | ClassComponent<D, P, any>
 
-const pageTitle: string = 'Secure Page'
 const securePageHoc = (Page: Component<any, any>): ClassComponent<void, any, void> => class SecurePage extends React.Component {
   static async getInitialProps (ctx: Ctx) {
     const state = ctx.store.getState()
@@ -52,8 +51,8 @@ const securePageHoc = (Page: Component<any, any>): ClassComponent<void, any, voi
   }
 }
 
-const mapStateToProps = ({user}: State): mixed => ({user})
+const mapStateToProps = ({ user }: State): mixed => ({ user })
 
 // Takes in Page(component) and returns our HOC passing in Page to the 2nd HOC
-export default <D: void, P: any> (Page: ClassComponent<D, P, any>) =>
-  connect(mapStateToProps)(standardLayout(securePageHoc(Page), pageTitle))
+export default <D: void, P: any> (Page: ClassComponent<D, P, any>, title: string) =>
+  connect(mapStateToProps)(standardLayout(securePageHoc(Page), title))

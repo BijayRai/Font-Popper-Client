@@ -1,8 +1,11 @@
 'use strict';var _regenerator = require('babel-runtime/regenerator');var _regenerator2 = _interopRequireDefault(_regenerator);var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-
-// const tokenUtils = require('../utils/serverUtilsTokens')
+/**
+                                                                                                                                                                                                                                                                                                                                                                            * FLow wont pick up unless we use the non-compiled version so uncomment it
+                                                                                                                                                                                                                                                                                                                                                                            * So we aren't using babel-node in production
+                                                                                                                                                                                                                                                                                                                                                                            */
 var tokenUtils = require('../serverCompiled/serverUtilsTokens');
 // const tokenUtils = require('../serverMiddleware/serverUtilsTokens')
+
 /*
  * This middleware attaches USER to the req if a user is present
  * from a token refresh

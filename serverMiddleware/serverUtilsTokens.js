@@ -29,6 +29,8 @@ type Jwt = {
  * @returns {String} cookie string
  */
 exports.extractJWTFromCookieParser = (cookies: CookiesFromServer): Jwt | void => {
+  console.log('Spencer compiled')
+
   // console.log('cookies - extractJWTFromCookieParser')
   // console.log(cookies)
 
@@ -88,10 +90,11 @@ exports.resetCheck = async (resetToken: string): Promise<any> => {
       'Content-Type': 'application/json'
     },
     credentials: 'include', // Don't forget to specify this if you need cookies
-    body: JSON.stringify({resetToken: resetToken})
+    body: JSON.stringify({ resetToken: resetToken })
   })
 }
 
+// USED FOR EMAIL CHECK PROCESS
 exports.confirmCheck = async (validationToken: string): Promise<any> => {
   const response = await fetch(
     `${config.envConfig.BACKEND_URL}/api/account/confirm`,
@@ -101,7 +104,7 @@ exports.confirmCheck = async (validationToken: string): Promise<any> => {
         'Content-Type': 'application/json'
       },
       credentials: 'include', // Don't forget to specify this if you need cookies
-      body: JSON.stringify({token: validationToken})
+      body: JSON.stringify({ token: validationToken })
     }
   )
 
